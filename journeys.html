@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Journeys — The Modern Ashram</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Work+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
+<style>
+  /* ────────── BRAND TOKENS ────────── */
+  :root {
+    --c-deep-teal:    #1F3136;
+    --c-forest-green: #547063;
+    --c-dusty-mauve:  #9A8480;
+    --c-warm-sand:    #B68E73;
+    --c-blush:        #E2CCC3;
+    --c-sage-mist:    #D1DFDC;
+    --c-cream:        #F7F3EC;
+
+    --font-display: 'Gloock', Georgia, serif;
+    --font-body: 'Work Sans', system-ui, sans-serif;
+
+    --radius-section: 22px;
+    --radius-card: 16px;
+    --radius-btn: 8px;
+  }
+
+  /* ────────── BASE ────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+    background: #FFFBFB;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    color: var(--c-deep-teal);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+
+  /* ────────── PAGE WRAPPER ────────── */
+  .page {
+    padding: 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  /* ────────── BUTTONS ────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+    border-radius: var(--radius-btn);
+    padding: 10px 32px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .btn:hover { opacity: 0.88; }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary {
+    background: linear-gradient(to right, #1F3136 0%, #547063 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 10px 32px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .btn-ghost {
+    background: rgba(249,248,244,0.18);
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.7);
+    backdrop-filter: blur(4px);
+  }
+  .btn-light {
+    background: #fff;
+    color: var(--c-deep-teal);
+  }
+
+  /* ────────── NAV (canonical — keep in sync across all pages) ────────── */
+  .nav {
+    background: #FFFBFB;
+    height: 96px;
+    padding: 0 60px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    position: relative;
+    border-radius: 22px;
+  }
+  .nav-burger {
+    display: none;
+    width: 32px; height: 32px;
+    border: none; background: transparent; cursor: pointer; padding: 0;
+    flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+    grid-column: 1; justify-self: start;
+  }
+  .nav-burger span {
+    display: block; width: 22px; height: 2px; background: #1F3136; border-radius: 1px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .nav-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    justify-self: start; grid-column: 1;
+  }
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400;
+    color: #1F3136; text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-links .has-caret { display: inline-flex; align-items: center; gap: 6px; }
+  .nav-links .has-caret::after {
+    content: ""; width: 10px; height: 5px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'><path d='M5 5L0 0h10z'/></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'><path d='M5 5L0 0h10z'/></svg>") no-repeat center / contain;
+    transition: transform 0.2s ease;
+  }
+  .nav-dropdown { position: relative; display: flex; align-items: center; }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: #fffbfb;
+    border-radius: 10px;
+    padding: 8px 0;
+    min-width: 220px;
+    box-shadow: 0 8px 24px rgba(31,49,54,0.12), 0 2px 6px rgba(31,49,54,0.06);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 100;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown:focus-within .nav-dropdown-menu {
+    opacity: 1; visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .nav-dropdown:hover .has-caret::after { transform: rotate(180deg); }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400;
+    color: #1F3136;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.15s ease, opacity 0.15s ease;
+    border-radius: 6px; margin: 2px 6px;
+  }
+  .nav-dropdown-menu a:hover { background: #F7F3EC; opacity: 1; }
+  .nav-logo {
+    justify-self: center;
+    width: 82px; height: 77px;
+    background: url("assets/images/The Modern Ashram TOP NAV LOGO.svg") center / contain no-repeat;
+    grid-column: 2;
+  }
+  .nav-cta {
+    justify-self: end;
+    background: linear-gradient(270deg, #547063 0%, #1F3136 100%);
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-family: var(--font-body); font-weight: 500; font-size: 16px;
+    line-height: 1.4;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: opacity 0.2s;
+    grid-column: 3;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+  @media (max-width: 1024px) {
+    .nav { display: flex; align-items: center; gap: 12px; height: 72px; padding: 0 20px; grid-template-columns: none; column-gap: 0; }
+    .nav-burger { display: flex; order: 3; align-self: center; flex-shrink: 0; margin-left: 14px; }
+    .nav-links {
+      position: absolute;
+      top: calc(100% + 9px); left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 0;
+      background: #FFFBFB; border-radius: 16px; padding: 16px;
+      box-shadow: 0 12px 30px rgba(31,49,54,0.15);
+      opacity: 0; visibility: hidden; transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      z-index: 50;
+    }
+    .nav-burger[aria-expanded="true"] ~ .nav-links { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-links a { display: block; padding: 12px 16px; border-radius: 8px; font-size: 16px; }
+    .nav-links a:hover { opacity: 1; background: #F7F3EC; }
+    .nav-dropdown { display: block; align-items: stretch; }
+    .nav-dropdown-menu {
+      position: static; transform: none; box-shadow: none;
+      opacity: 1; visibility: visible;
+      padding: 4px 0 8px 16px; background: transparent; min-width: 0;
+    }
+    .nav-dropdown-menu a { padding: 10px 16px; font-size: 14px; }
+    .nav-dropdown:hover .has-caret::after,
+    .nav-dropdown:focus-within .has-caret::after { transform: none; }
+    .nav-logo { width: 56px; height: 61px; order: 1; align-self: center; flex-shrink: 0; }
+    .nav-cta { padding: 9px 20px; font-size: 14px; order: 2; align-self: center; flex-shrink: 0; margin-left: auto; }
+  }
+  @media (max-width: 767px) {
+    .nav { padding: 0 14px; height: 60px; }
+    .nav-logo { width: 46px; height: 50px; }
+    .nav-cta { padding: 8px 16px; font-size: 13px; }
+    .nav-links { padding: 12px; border-radius: 12px; }
+  }
+
+  /* ────────── SECTION 1 — HEADING ────────── */
+  .heading-section {
+    text-align: center;
+    padding: 88px 0 72px;
+    background: transparent;
+  }
+  .heading-section h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(40px, 5.4vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.012em;
+    color: var(--c-deep-teal);
+  }
+
+  /* ────────── SECTION 2 — JOURNEY CARDS ────────── */
+  .cards-section { background: transparent; padding: 0; }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .card-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px 16px 0 0;
+    display: block;
+  }
+  .card-body {
+    background: #ffffff;
+    padding: 40px 28px 72px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    gap: 12px;
+  }
+  .card-title {
+    font-family: 'Gloock', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: #1F3136;
+    margin-bottom: 0;
+  }
+  .card-date {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #547063;
+    margin-bottom: 0;
+  }
+  .card-descriptor {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 17px;
+    color: #1F3136;
+    line-height: 1.7;
+    flex: 1;
+    margin-bottom: 0;
+    padding: 12px 16px;
+    text-wrap: pretty;
+  }
+  .card-body .btn { margin-top: 16px; }
+
+  /* ────────── SECTION 3 — EMAIL BAND ────────── */
+  .email-band {
+    position: relative; overflow: hidden;
+    border-radius: var(--radius-section);
+    padding: 72px 80px 104px 80px;
+    background-image: url('assets/images/full-frame-shot-rippled-water.jpg');
+    background-size: cover; background-position: center;
+  }
+  .email-band::before {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(0,0,0,0.20); z-index: 0;
+  }
+  .email-band > * { position: relative; z-index: 1; }
+  .email-band-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 45px;
+    max-width: 100%;
+  }
+  .email-band-title {
+    font-family: 'Gloock', serif;
+    font-size: 40px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.2;
+    max-width: 420px;
+    text-align: center;
+  }
+  .email-band-form {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .email-input {
+    background: rgba(255, 255, 255, 0.75); border: none;
+    border-radius: var(--radius-btn);
+    padding: 10px 20px;
+    font-family: var(--font-body); font-size: 16px; line-height: 1.4;
+    color: var(--c-deep-teal); width: 428px;
+    outline: none;
+  }
+  .email-input::placeholder { color: rgba(31,49,54,0.55); }
+  .email-submit {
+    background: #D1DFDC; color: #1F3136;
+    border: none; border-radius: var(--radius-btn);
+    padding: 10px 28px;
+    font-family: var(--font-body); font-weight: 500;
+    font-size: 16px; line-height: 1.4; cursor: pointer; white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .email-submit:hover { background: #FFFBFB; }
+
+  /* ────────── SECTION 4 — ARE YOU READY CTA ────────── */
+  .cta-section {
+    position: relative; overflow: hidden;
+    border-radius: var(--radius-section);
+    min-height: 1700px;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.22) 100%),
+      url('assets/images/Temple Person Sillouette.jpg') center bottom / cover no-repeat,
+      #1a1410;
+    display: flex; flex-direction: column;
+    padding: 80px 0 100px;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: transparent; z-index: 0;
+  }
+  .cta-section > * { position: relative; z-index: 1; }
+
+  .scroll-track-wrap {
+    width: 100%;
+    overflow: hidden;
+  }
+  .scroll-track {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    width: max-content;
+    animation: scroll-left 44s linear infinite;
+  }
+  @keyframes scroll-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .scroll-card {
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    width: 264px; min-width: 264px; max-width: 264px;
+    height: 336px; min-height: 336px; max-height: 336px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .scroll-track > .scroll-card { margin-top: 0; }
+  .scroll-track > .scroll-card:nth-child(2n+1) { margin-top: 80px; }
+  .scroll-track > .scroll-card:nth-child(2n+2) { margin-top: 0; }
+  .scroll-card img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+
+  .cta-content {
+    margin: 80px auto 0;
+    max-width: 700px;
+    padding: 0 32px;
+    text-align: center;
+    color: #fff;
+  }
+  .cta-eyebrow {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 19px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 20px;
+  }
+  .cta-headline {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+  .cta-body {
+    font-family: var(--font-body);
+    font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 56px auto;
+  }
+  .cta-body strong { font-weight: 600; color: #fff; }
+
+  /* ────────── INSTAGRAM ────────── */
+  .instagram {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    background: transparent;
+  }
+  .instagram-tile {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 250ms ease-in-out;
+  }
+  .instagram-tile::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.55);
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .instagram-tile::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 28px; height: 28px;
+    background: #fff;
+    -webkit-mask: url("assets/images/Instagram Icon 28 x 28px.svg") no-repeat center / contain;
+            mask: url("assets/images/Instagram Icon 28 x 28px.svg") no-repeat center / contain;
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .instagram-tile:hover { transform: scale(1.03); }
+  .instagram-tile:hover::before,
+  .instagram-tile:hover::after { opacity: 1; }
+  .instagram-tile:nth-child(1) { background-image: url("assets/images/IMG_6427.JPG"); background-size: cover; background-position: center; }
+  .instagram-tile:nth-child(2) { background-image: url("assets/images/AdobeStock_1598281600.jpeg"); background-size: cover; background-position: center; }
+  .instagram-tile:nth-child(3) { background-image: url("assets/images/Sphinx.png"); background-size: cover; background-position: center; }
+  .instagram-tile:nth-child(4) { background-image: url("assets/images/AdobeStock_355522063.jpeg"); background-size: cover; background-position: center; }
+  .instagram-tile:nth-child(5) { background-image: url("assets/images/Deluxe Cabin.JPEG"); background-size: cover; background-position: center; }
+  .instagram-tile:nth-child(6) { background-image: url("assets/images/AdobeStock_523369556.jpeg"); background-size: cover; background-position: center; }
+  .instagram-logo { display: none; }
+
+  /* ────────── FOOTER ────────── */
+  .footer {
+    background: #FFFBFB;
+    padding: 90px 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+  }
+  .footer-logo {
+    width: 220px; height: 240px;
+    background: url("assets/images/The Modern Ashram Logo FOOTER.svg") center / contain no-repeat;
+  }
+  .footer-nav {
+    display: flex; align-items: center; gap: 64px;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .footer-nav a {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--c-deep-teal);
+    text-decoration: none;
+    line-height: 1.5;
+    transition: opacity 0.2s;
+  }
+  .footer-nav a:hover { opacity: 0.6; }
+
+  .footer-instagram {
+    width: 28px; height: 28px;
+    text-decoration: none;
+    display: inline-flex;
+    transition: opacity 0.2s;
+  }
+  .footer-instagram:hover { opacity: 0.7; }
+  .footer-instagram img { width: 28px; height: 28px; display: block; }
+
+  .footer-divider {
+    width: 100%;
+    max-width: 100%;
+    height: 1px;
+    background: rgba(31, 49, 54, 0.4);
+    margin: 16px 0 0;
+  }
+  .footer-legal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 16px;
+  }
+  .footer-legal-left {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: #1f3136;
+  }
+  .footer-legal-right { display: flex; gap: 40px; flex-wrap: wrap; }
+  .footer-legal-right a {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: #1f3136;
+    text-decoration: none;
+  }
+  .footer-legal-right a:hover { opacity: 0.7; }
+
+  /* ────────── RESPONSIVE ────────── */
+  @media (max-width: 1024px) {
+    .email-band { padding: 56px 48px; }
+    .cta-headline { font-size: 48px; }
+  }
+  @media (max-width: 767px) {
+    .cta-eyebrow { font-size: 17px; }
+    .page { padding: 9px; gap: 6px; }
+    .heading-section { padding: 88px 20px 36px; }
+    .cards-section { padding: 0 16px 32px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .email-band { padding: 48px 24px; }
+    .email-band-inner { flex-direction: column; align-items: stretch; gap: 24px; }
+    .email-band-title { font-size: 28px; text-align: center; }
+    .email-band-form { flex-direction: column; align-items: stretch; gap: 12px; }
+    .email-input { width: 100%; height: 48px; padding: 0 18px; font-size: 14px; }
+    .email-submit { height: 48px; padding: 0 18px; font-size: 14px; }
+    .cta-section { min-height: 100vh; padding: 56px 0 72px; }
+    .cta-headline { font-size: 38px; }
+    .cta-content { margin-top: 56px; padding: 0 24px; }
+    .scroll-card {
+      width: 170px; min-width: 170px; max-width: 170px;
+      height: 220px; min-height: 220px; max-height: 220px;
+    }
+    .instagram { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .footer { padding: 60px 24px 30px; gap: 22px; }
+    .footer-logo { width: 130px; height: 142px; }
+    .footer-nav { gap: 32px; }
+    .footer-legal { flex-direction: column; gap: 12px; padding-top: 12px; }
+    .footer-legal-right { flex-direction: column; gap: 12px; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ── NAV (canonical — keep in sync across all pages) ───────────────── -->
+  <nav class="nav" aria-label="Primary" data-screen-label="Nav">
+    <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-menu">
+      <a href="home.html">Home</a>
+      <div class="nav-dropdown">
+        <a href="journeys.html" class="has-caret">Journeys</a>
+        <div class="nav-dropdown-menu">
+          <a href="the-eternal-nile.html">The Eternal Nile</a>
+          <a href="ancient-egyptian-odyssey.html">Ancient Egyptian Odyssey</a>
+        </div>
+      </div>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="home.html" class="nav-logo" aria-label="The Modern Ashram"></a>
+    <a href="contact.html" class="nav-cta">Enquire Now</a>
+  </nav>
+
+  <!-- SECTION 1 — PAGE HEADING -->
+  <section class="heading-section">
+    <h1>Your next adventure calls</h1>
+  </section>
+
+  <!-- SECTION 2 — JOURNEY CARDS -->
+  <section class="cards-section">
+    <div class="cards-grid">
+
+      <article class="card">
+        <img class="card-image" style="object-position: left center;" src="assets/images/Block Photo to enter the journey.jpg" alt="The Eternal Nile journey" />
+        <div class="card-body">
+          <h2 class="card-title">The Eternal Nile</h2>
+          <p class="card-date">5 - 15 October, 2026</p>
+          <p class="card-descriptor">Join us for our next sacred journey<br><span style="font-weight: 600; white-space: nowrap;">The Eternal Nile</span>.</p>
+          <a href="the-eternal-nile.html" class="btn btn-primary">Find Out More</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <img class="card-image" src="assets/images/IMG_6430.JPG" alt="Ancient Egyptian Odyssey" />
+        <div class="card-body">
+          <h2 class="card-title">Ancient Egyptian Odyssey</h2>
+          <p class="card-date">October 25 - November 3, 2026</p>
+          <p class="card-descriptor">Join us for our seventh edition <span style="font-weight: 600; white-space: nowrap;">Ancient Egyptian Odyssey</span>.</p>
+          <a href="ancient-egyptian-odyssey.html" class="btn btn-primary">Find Out More</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <img class="card-image" src="assets/images/Wall Texture.jpeg" alt="Ancient stone texture" />
+        <div class="card-body">
+          <h2 class="card-title">To be Announced</h2>
+          <p class="card-date">Coming soon</p>
+          <p class="card-descriptor">More details on this event will be published in the near future.</p>
+          <a href="#" class="btn btn-primary" style="opacity: 0.5; pointer-events: none;" aria-disabled="true">Find Out More</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SECTION 3 — EMAIL BAND -->
+  <section class="email-band">
+    <div class="email-band-inner">
+      <h2 class="email-band-title">Sign up to get notified of future journeys</h2>
+      <form class="email-band-form mc-signup" action="https://instagram.us17.list-manage.com/subscribe/post?u=4c775b67544f858d26cd31d0a&amp;id=5cca6c6e4f&amp;f_id=00f0d9e3f0" method="post">
+        <input class="email-input" type="email" name="EMAIL" placeholder="Your email" aria-label="Your email" required />
+        <button class="email-submit" type="submit">Get notified</button>
+        <div aria-hidden="true" style="position:absolute;left:-5000px;"><input type="text" name="b_4c775b67544f858d26cd31d0a_5cca6c6e4f" tabindex="-1" value=""></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- SECTION 4 — ARE YOU READY CTA -->
+  <section class="cta-section">
+    <div class="scroll-track-wrap" aria-hidden="true">
+      <div class="scroll-track">
+        <!-- set A: 6 unique cards -->
+        <div class="scroll-card"><img src="assets/images/full-frame-shot-sand.jpg" alt="" /></div>
+        <div class="scroll-card"><img src="assets/images/Temple Wall.jpeg" alt="" /></div>
+        <div class="scroll-card"><img src="assets/images/Bird on Nile.jpeg" alt="" /></div>
+        <div class="scroll-card"><img src="assets/images/Luxor Temple.jpeg" alt="" /></div>
+        <div class="scroll-card"><img src="assets/images/Rock Crevice.jpeg" alt="" /></div>
+        <div class="scroll-card"><img src="assets/images/AdobeStock_523369556.jpeg" alt="" /></div>
+        <!-- set B: duplicate for seamless loop -->
+        <div class="scroll-card"><img src="assets/images/full-frame-shot-sand.jpg" alt="" /></div>
+        <div class="scroll-card"><img src="assets/images/Temple Wall.jpeg" alt="" /></div>
+        <div class="scroll-card"><img src="assets/images/Bird on Nile.jpeg" alt="" /></div>
+        <div class="scroll-card"><img src="assets/images/Luxor Temple.jpeg" alt="" /></div>
+        <div class="scroll-card"><img src="assets/images/Rock Crevice.jpeg" alt="" /></div>
+        <div class="scroll-card"><img src="assets/images/AdobeStock_523369556.jpeg" alt="" /></div>
+      </div>
+    </div>
+
+    <div class="cta-content">
+      <p class="cta-eyebrow">Bespoke journeys tailored just for you</p>
+      <h2 class="cta-headline">Are you ready for a major shift?</h2>
+      <p class="cta-body">A curated immersion into <strong>sacred sites</strong>, <strong>ancient wisdom</strong>, and <strong>conscious exploration</strong> — where <strong>transformation</strong> becomes lived experience.</p>
+      <a href="contact.html" class="btn btn-light">Enquire Now</a>
+    </div>
+  </section>
+
+  <!-- ── INSTAGRAM (Elfsight) ──────────────────────── -->
+  <section class="instagram-feed" data-screen-label="Instagram">
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <div class="elfsight-app-26f3251d-0988-40a5-a153-fbbe3986d1cd" data-elfsight-app-lazy></div>
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────────────── -->
+  <footer class="footer" data-screen-label="Footer">
+    <div class="footer-logo" aria-hidden="true"></div>
+
+    <a href="https://www.instagram.com/themodernashram/" class="footer-instagram" aria-label="Instagram" target="_blank" rel="noopener">
+      <img src="assets/images/Instagram Icon 28 x 28px DARK GREEN.svg" alt="" width="28" height="28">
+    </a>
+
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="home.html">Home</a>
+      <a href="journeys.html">Journeys</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="footer-divider" aria-hidden="true"></div>
+
+    <div class="footer-legal">
+      <p class="footer-legal-left">© 2026 The Modern Ashram</p>
+      <div class="footer-legal-right">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-use.html">Terms of Use</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  /* canonical nav hamburger toggle — keep in sync across all pages */
+  (function () {
+    const burger = document.querySelector('.nav-burger');
+    const navLinks = document.querySelector('.nav-links');
+    const nav = document.querySelector('.nav');
+    if (!burger || !navLinks || !nav) return;
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const expanded = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!expanded));
+    });
+    navLinks.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') burger.setAttribute('aria-expanded', 'false');
+    });
+    document.addEventListener('click', function (e) {
+      if (!nav.contains(e.target)) burger.setAttribute('aria-expanded', 'false');
+    });
+  })();
+</script>
+
+<script>
+  /* MailChimp signup handler — posts via JSONP, then redirects to signup-success.html */
+  (function () {
+    var forms = document.querySelectorAll('form.mc-signup');
+    if (!forms.length) return;
+    var redirected = false;
+    function go() { if (redirected) return; redirected = true; window.location.href = 'signup-success.html'; }
+    window.mcSignupCallback = go;
+    forms.forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var params = new URLSearchParams();
+        new FormData(form).forEach(function (v, k) { params.append(k, v); });
+        var url = form.action.replace('/post?', '/post-json?') + '&' + params.toString() + '&c=mcSignupCallback';
+        var s = document.createElement('script'); s.src = url; document.body.appendChild(s);
+        setTimeout(go, 4000);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

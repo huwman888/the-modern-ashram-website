@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Thank you for your message — The Modern Ashram</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  @font-face { font-family: "Work Sans Local"; src: url("assets/fonts/WorkSans-VariableFont_wght.ttf") format("truetype"); font-weight: 100 900; font-style: normal; }
+  @font-face { font-family: "Gloock Local"; src: url("assets/fonts/Gloock-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; }
+
+  :root {
+    --c-deep-teal:    #1F3136;
+    --c-forest-green: #547063;
+    --c-cream:        #FFFBFB;
+    --font-display:   "Gloock", "Gloock Local", Georgia, serif;
+    --font-body:      "Work Sans", "Work Sans Local", system-ui, sans-serif;
+    --radius-btn:     8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--c-cream);
+    font-family: var(--font-body);
+    color: var(--c-deep-teal);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .success-logo {
+    width: clamp(180px, 22vw, 280px);
+    height: auto;
+    margin-bottom: clamp(40px, 5vw, 64px);
+    display: block;
+  }
+
+  .success-eyebrow {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: clamp(18px, 1.7vw, 21px);
+    letter-spacing: 0.04em;
+    color: var(--c-forest-green);
+    margin-bottom: 16px;
+  }
+
+  .success-heading {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(34px, 4.4vw, 60px);
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+    color: var(--c-deep-teal);
+    text-wrap: balance;
+    margin-bottom: clamp(22px, 2.5vw, 32px);
+  }
+
+  .success-body {
+    font-family: var(--font-body);
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.6;
+    color: var(--c-deep-teal);
+    max-width: 540px;
+    margin-bottom: clamp(48px, 6vw, 80px);
+  }
+
+  .success-cta {
+    background: linear-gradient(270deg, var(--c-forest-green) 0%, var(--c-deep-teal) 100%);
+    color: #fff;
+    border-radius: var(--radius-btn);
+    padding: 12px 40px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .success-cta:hover  { opacity: 0.88; }
+  .success-cta:active { transform: scale(0.98); }
+  .success-cta:focus-visible { outline: 2px solid var(--c-forest-green); outline-offset: 4px; }
+
+  @media (max-width: 767px) {
+    body { padding: 48px 24px; }
+    .success-logo    { width: 180px; margin-bottom: 36px; }
+    .success-eyebrow { font-size: 17px; margin-bottom: 12px; }
+    .success-heading { font-size: 30px; margin-bottom: 20px; }
+    .success-body    { font-size: 15px; margin-bottom: 44px; }
+    .success-cta     { padding: 10px 32px; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+  <img src="assets/images/The Modern Ashram TOP NAV LOGO.svg"
+       alt="The Modern Ashram"
+       class="success-logo"
+       width="280" height="304" />
+
+  <p class="success-eyebrow">Thank you</p>
+
+  <h1 class="success-heading">for your message</h1>
+
+  <p class="success-body">One of our team will be in touch with you shortly.</p>
+
+  <a href="home.html" class="success-cta">Back to main site</a>
+
+</body>
+</html>

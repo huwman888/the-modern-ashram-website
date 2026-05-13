@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - The Modern Ashram</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Work+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:#1F3136; --green:#547063; --mauve:#9A8480; --sand:#B68E73;
+    --blush:#E2CCC3; --sage:#D1DFDC; --cream:#FFFBFB;
+
+    --c-deep-teal:    #1F3136;
+    --c-forest-green: #547063;
+    --c-dusty-mauve:  #9A8480;
+    --c-warm-sand:    #B68E73;
+    --c-blush:        #E2CCC3;
+    --c-sage-mist:    #D1DFDC;
+    --c-cream:        #F7F3EC;
+
+    --font-display: "Gloock", Georgia, serif;
+    --font-body:    "Work Sans", system-ui, sans-serif;
+
+    --radius-section: 22px;
+    --radius-card:    16px;
+    --radius-btn:     8px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    font-family: var(--font-body);
+    color: var(--teal);
+    -webkit-font-smoothing: antialiased;
+    padding: 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  /* Typography */
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--blush);
+  }
+  .h1 { font-family: var(--font-display); font-size: clamp(40px, 5.4vw, 72px); font-weight: 400; line-height: 1.05; letter-spacing: -0.012em; }
+  .h2 { font-family: var(--font-display); font-size: clamp(34px, 4vw, 56px); font-weight: 400; line-height: 1.08; letter-spacing: -0.012em; }
+  .h3 { font-family: var(--font-display); font-size: clamp(26px, 2.8vw, 40px); font-weight: 400; line-height: 1.15; letter-spacing: -0.005em; }
+
+  .panel { border-radius: var(--radius-section); overflow: hidden; }
+
+  /* ────────── NAV (canonical — keep in sync across all pages) ────────── */
+  .nav {
+    background: #FFFBFB;
+    height: 96px;
+    padding: 0 60px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    position: relative;
+    border-radius: 22px;
+  }
+  .nav-burger {
+    display: none;
+    width: 32px; height: 32px;
+    border: none; background: transparent; cursor: pointer; padding: 0;
+    flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+    grid-column: 1; justify-self: start;
+  }
+  .nav-burger span {
+    display: block; width: 22px; height: 2px; background: #1F3136; border-radius: 1px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .nav-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    justify-self: start; grid-column: 1;
+  }
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400;
+    color: #1F3136; text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-links .has-caret { display: inline-flex; align-items: center; gap: 6px; }
+  .nav-links .has-caret::after {
+    content: ""; width: 10px; height: 5px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'><path d='M5 5L0 0h10z'/></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'><path d='M5 5L0 0h10z'/></svg>") no-repeat center / contain;
+    transition: transform 0.2s ease;
+  }
+  .nav-dropdown { position: relative; display: flex; align-items: center; }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: #fffbfb;
+    border-radius: 10px;
+    padding: 8px 0;
+    min-width: 220px;
+    box-shadow: 0 8px 24px rgba(31,49,54,0.12), 0 2px 6px rgba(31,49,54,0.06);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 100;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown:focus-within .nav-dropdown-menu {
+    opacity: 1; visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .nav-dropdown:hover .has-caret::after { transform: rotate(180deg); }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400;
+    color: #1F3136;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.15s ease, opacity 0.15s ease;
+    border-radius: 6px; margin: 2px 6px;
+  }
+  .nav-dropdown-menu a:hover { background: #F7F3EC; opacity: 1; }
+  .nav-logo {
+    justify-self: center;
+    width: 82px; height: 77px;
+    background: url("assets/images/The Modern Ashram TOP NAV LOGO.svg") center / contain no-repeat;
+    grid-column: 2;
+  }
+  .nav-cta {
+    justify-self: end;
+    background: linear-gradient(270deg, #547063 0%, #1F3136 100%);
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-family: var(--font-body); font-weight: 500; font-size: 16px;
+    line-height: 1.4;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: opacity 0.2s;
+    grid-column: 3;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+  @media (max-width: 1024px) {
+    .nav { display: flex; align-items: center; gap: 12px; height: 72px; padding: 0 20px; grid-template-columns: none; column-gap: 0; }
+    .nav-burger { display: flex; order: 3; align-self: center; flex-shrink: 0; margin-left: 14px; }
+    .nav-links {
+      position: absolute;
+      top: calc(100% + 9px); left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 0;
+      background: #FFFBFB; border-radius: 16px; padding: 16px;
+      box-shadow: 0 12px 30px rgba(31,49,54,0.15);
+      opacity: 0; visibility: hidden; transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      z-index: 50;
+    }
+    .nav-burger[aria-expanded="true"] ~ .nav-links { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-links a { display: block; padding: 12px 16px; border-radius: 8px; font-size: 16px; }
+    .nav-links a:hover { opacity: 1; background: #F7F3EC; }
+    .nav-dropdown { display: block; align-items: stretch; }
+    .nav-dropdown-menu {
+      position: static; transform: none; box-shadow: none;
+      opacity: 1; visibility: visible;
+      padding: 4px 0 8px 16px; background: transparent; min-width: 0;
+    }
+    .nav-dropdown-menu a { padding: 10px 16px; font-size: 14px; }
+    .nav-dropdown:hover .has-caret::after,
+    .nav-dropdown:focus-within .has-caret::after { transform: none; }
+    .nav-logo { width: 56px; height: 61px; order: 1; align-self: center; flex-shrink: 0; }
+    .nav-cta { padding: 9px 20px; font-size: 14px; order: 2; align-self: center; flex-shrink: 0; margin-left: auto; }
+  }
+  @media (max-width: 767px) {
+    .nav { padding: 0 14px; height: 60px; }
+    .nav-logo { width: 46px; height: 50px; }
+    .nav-cta { padding: 8px 16px; font-size: 13px; }
+    .nav-links { padding: 12px; border-radius: 12px; }
+  }
+
+  /* ────────── HEADING ────────── */
+  .contact-heading {
+    background: var(--cream);
+    padding: 88px 0 72px;
+    text-align: center;
+  }
+  .contact-heading h1 { color: var(--teal); }
+
+  /* ────────── MAIN ────────── */
+  .contact-main {
+    background: var(--cream);
+    padding: 0;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "connect form"
+      "signup  form";
+    gap: 9px;
+    align-items: stretch;
+  }
+  .connect-card { grid-area: connect; }
+  .signup-card  { grid-area: signup; }
+  .contact-form { grid-area: form; }
+
+  /* Connect card */
+  .connect-card {
+    background: var(--teal);
+    color: #fff;
+    border-radius: var(--radius-section);
+    padding: 48px 44px;
+  }
+  .connect-card .eyebrow { color: var(--blush); display: inline-block; margin-bottom: 14px; }
+  .connect-card h2 { color: #fff; margin-bottom: 22px; }
+  .connect-card p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.86);
+    margin-bottom: 36px;
+    max-width: none;
+    padding-right: 8px;
+  }
+  .connect-list { display: flex; flex-direction: column; gap: 16px; }
+  .connect-item { display: flex; align-items: center; gap: 14px; }
+  .connect-item .ico {
+    width: 22px; height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--blush);
+  }
+  .connect-item .ico svg { width: 100%; height: 100%; }
+  .connect-item a, .connect-item span {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-color: rgba(255,255,255,0.4);
+    text-underline-offset: 3px;
+    transition: opacity 0.2s;
+  }
+  .connect-item span { text-decoration: none; }
+  .connect-item a:hover { opacity: 0.7; }
+
+  /* Sign-up card */
+  .signup-card {
+    position: relative;
+    border-radius: var(--radius-section);
+    overflow: hidden;
+    min-height: 420px;
+    background-image:
+      linear-gradient(180deg, rgba(31,49,54,0.18) 0%, rgba(31,49,54,0.55) 100%),
+      url("assets/images/scenic-view-palm-trees-against-sky-with-sahara-lake-oasis.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 36px 32px;
+    color: #fff;
+    text-align: center;
+  }
+  .signup-mark {
+    width: 88px; height: 96px;
+    background: url("assets/images/The Modern Ashram Logo FOOTER.svg") center / contain no-repeat;
+    filter: brightness(0) invert(1);
+    margin-top: 8px;
+  }
+  .signup-card h3 {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 2.6vw, 34px);
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.15;
+    max-width: 380px;
+  }
+  .signup-form {
+    display: flex;
+    gap: 9px;
+    width: 100%;
+  }
+  .signup-form input[type="email"] {
+    flex: 1;
+    padding: 12px 18px;
+    border-radius: var(--radius-btn);
+    border: none;
+    background: rgba(255,255,255,0.92);
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--teal);
+    outline: none;
+    transition: background 0.2s;
+  }
+  .signup-form input[type="email"]::placeholder { color: rgba(31,49,54,0.55); }
+  .signup-form input[type="email"]:focus { background: #fff; }
+  .signup-form button {
+    background: var(--sage);
+    color: var(--teal);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: var(--radius-btn);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+  .signup-form button:hover { background: #fff; }
+  .signup-form button:active { transform: translateY(1px); }
+
+  /* Form */
+  .contact-form {
+    background: #ffffff;
+    border-radius: var(--radius-section);
+    padding: 44px 40px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-field { display: flex; flex-direction: column; gap: 8px; }
+  .form-field label {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--teal);
+  }
+  .form-field label .req { color: var(--teal); }
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--teal);
+    background: rgba(0, 3, 51, 0.15);
+    border: none;
+    border-radius: var(--radius-btn);
+    padding: 14px 16px;
+    width: 100%;
+    outline: none;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .form-input::placeholder,
+  .form-textarea::placeholder { color: rgba(31,49,54,0.5); }
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    background: #fff;
+    box-shadow: 0 0 0 2px var(--blush);
+  }
+  .form-textarea { min-height: 140px; resize: vertical; }
+  .form-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path fill='%231F3136' d='M6 8L0 0h12z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 12px;
+    padding-right: 44px;
+    cursor: pointer;
+  }
+  .form-select:focus {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path fill='%231F3136' d='M6 8L0 0h12z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 12px;
+  }
+
+  /* Checkbox group */
+  .checkbox-group-label {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--teal);
+    margin-bottom: 14px;
+  }
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 24px;
+  }
+  .check-item { display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+  .check-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid rgba(0, 3, 51, 0.15);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .check-item input[type="checkbox"]:checked {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .check-item input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    transform: translate(-50%, -50%);
+  }
+  .check-item .lbl {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--teal);
+  }
+
+  .terms-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+  }
+  .terms-row input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid rgba(0, 3, 51, 0.15);
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .terms-row input[type="checkbox"]:checked {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .terms-row input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    width: 8px;
+    height: 4px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg);
+  }
+  .terms-row label {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--teal);
+    cursor: pointer;
+  }
+
+  .btn-submit {
+    align-self: flex-start;
+    background: linear-gradient(270deg, #547063 0%, #1F3136 100%);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-btn);
+    padding: 10px 28px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-top: auto;
+  }
+  .btn-submit:hover { opacity: 0.9; }
+  .btn-submit:active { transform: translateY(1px); }
+
+  /* ────────── INSTAGRAM ────────── */
+  .instagram {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 9px;
+    background: transparent;
+    width: 100%;
+  }
+  .instagram-tile {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    min-width: 0;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 250ms ease-in-out;
+  }
+  .instagram-tile::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.55);
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .instagram-tile::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 28px; height: 28px;
+    background: #fff;
+    -webkit-mask: url("assets/images/Instagram Icon 28 x 28px.svg") no-repeat center / contain;
+            mask: url("assets/images/Instagram Icon 28 x 28px.svg") no-repeat center / contain;
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .instagram-tile:hover { transform: scale(1.03); }
+  .instagram-tile:hover::before,
+  .instagram-tile:hover::after { opacity: 1; }
+  .instagram-tile:nth-child(1) { background-image: url("assets/images/IMG_6427.JPG"); }
+  .instagram-tile:nth-child(2) { background-image: url("assets/images/AdobeStock_1598281600.jpeg"); }
+  .instagram-tile:nth-child(3) { background-image: url("assets/images/Sphinx.png"); }
+  .instagram-tile:nth-child(4) { background-image: url("assets/images/AdobeStock_355522063.jpeg"); }
+  .instagram-tile:nth-child(5) { background-image: url("assets/images/Deluxe Cabin.JPEG"); }
+  .instagram-tile:nth-child(6) { background-image: url("assets/images/AdobeStock_523369556.jpeg"); }
+
+  /* ────────── FOOTER ────────── */
+  .footer {
+    background: #FFFBFB;
+    padding: 90px 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+  }
+  .footer-logo {
+    width: 220px; height: 240px;
+    background: url("assets/images/The Modern Ashram Logo FOOTER.svg") center / contain no-repeat;
+  }
+  .footer-instagram {
+    width: 28px; height: 28px;
+    text-decoration: none;
+    display: inline-flex;
+    transition: opacity 0.2s;
+  }
+  .footer-instagram:hover { opacity: 0.7; }
+  .footer-instagram img { width: 28px; height: 28px; display: block; }
+  .footer-nav {
+    display: flex; align-items: center; gap: 64px;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .footer-nav a {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--c-deep-teal);
+    text-decoration: none;
+    line-height: 1.5;
+    transition: opacity 0.2s;
+  }
+  .footer-nav a:hover { opacity: 0.6; }
+  .footer-divider {
+    width: 100%;
+    max-width: 100%;
+    height: 1px;
+    background: rgba(31, 49, 54, 0.4);
+    margin: 16px 0 0;
+  }
+  .footer-legal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 16px;
+  }
+  .footer-legal-left {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: #1f3136;
+  }
+  .footer-legal-right { display: flex; gap: 40px; flex-wrap: wrap; }
+  .footer-legal-right a {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: #1f3136;
+    text-decoration: none;
+  }
+  .footer-legal-right a:hover { opacity: 0.7; }
+
+  /* ────────── RESPONSIVE ────────── */
+  @media (max-width: 1024px) {
+    .contact-heading { padding: 64px 0 52px; }
+    .contact-main { padding: 0; }
+    .contact-grid {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "connect"
+        "form"
+        "signup";
+    }
+    .connect-card { padding: 36px 28px; }
+    .signup-card { min-height: 360px; padding: 32px 24px; }
+    .contact-form { padding: 36px 28px; }
+  }
+  @media (max-width: 600px) {
+    .contact-heading { padding: 88px 0 36px; }
+    .contact-main { padding: 0; }
+    .form-row.email-phone { grid-template-columns: 1fr; }
+    .form-row.helper { grid-template-columns: 1fr; }
+    .checkbox-grid { grid-template-columns: 1fr; }
+    .signup-form { flex-direction: column; gap: 9px; }
+    .signup-form input[type="email"] { height: 48px; padding: 0 18px; }
+    .signup-form button { height: 48px; padding: 0 24px; }
+    .connect-card { padding: 32px 24px; }
+    .connect-card p { margin-bottom: 28px; }
+    .contact-form { padding: 28px 22px; }
+  }
+  @media (max-width: 767px) {
+    .eyebrow { font-size: 17px; }
+    .instagram { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .footer { padding: 60px 24px 30px; gap: 22px; }
+    .footer-logo { width: 130px; height: 142px; }
+    .footer-nav { gap: 32px; flex-direction: column; }
+    .footer-legal { flex-direction: column; gap: 12px; padding-top: 12px; }
+    .footer-legal-right { flex-direction: column; gap: 12px; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV (canonical — keep in sync across all pages) ───────────────── -->
+<nav class="nav" aria-label="Primary" data-screen-label="Nav">
+  <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="nav-menu">
+    <a href="home.html">Home</a>
+    <div class="nav-dropdown">
+      <a href="journeys.html" class="has-caret">Journeys</a>
+      <div class="nav-dropdown-menu">
+        <a href="the-eternal-nile.html">The Eternal Nile</a>
+        <a href="ancient-egyptian-odyssey.html">Ancient Egyptian Odyssey</a>
+      </div>
+    </div>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <a href="home.html" class="nav-logo" aria-label="The Modern Ashram"></a>
+  <a href="contact.html" class="nav-cta">Enquire Now</a>
+</nav>
+
+<!-- ── CONTACT HEADING ───────────────────────────────── -->
+<section class="panel contact-heading" data-screen-label="Contact heading">
+  <h1 class="h1">Contact us</h1>
+</section>
+
+<!-- ── CONTACT MAIN ──────────────────────────────────── -->
+<section class="panel contact-main" data-screen-label="Contact main">
+  <div class="contact-grid">
+
+    <!-- Connect card -->
+    <article class="connect-card">
+      <span class="eyebrow">Connect</span>
+      <h2 class="h2">Begin your journey</h2>
+      <p>Tell us about yourself and what calls you to journey with us.<br>We will respond within forty-eight hours.</p>
+      <ul class="connect-list">
+        <li class="connect-item">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </span>
+          <a href="mailto:modernashramteam@gmail.com">modernashramteam@gmail.com</a>
+        </li>
+        <li class="connect-item">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          <a href="tel:+34664096783">+34 664 096 783</a>
+        </li>
+        <li class="connect-item">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor"/></svg>
+          </span>
+          <a href="https://instagram.com/themodernashram" target="_blank" rel="noopener">@themodernashram</a>
+        </li>
+      </ul>
+    </article>
+
+    <!-- Form -->
+    <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="105891cb-16f3-4fd7-b4f0-9e0eeaf98f03">
+      <input type="hidden" name="subject" value="New contact form enquiry – The Modern Ashram">
+      <input type="hidden" name="from_name" value="The Modern Ashram website">
+      <input type="hidden" name="redirect" value="https://themodernashram.com/contact-success.html">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="first-name">First name<span class="req">*</span></label>
+          <input class="form-input" type="text" id="first-name" name="first-name" required>
+        </div>
+        <div class="form-field">
+          <label for="last-name">Last name<span class="req">*</span></label>
+          <input class="form-input" type="text" id="last-name" name="last-name" required>
+        </div>
+      </div>
+
+      <div class="form-row email-phone">
+        <div class="form-field">
+          <label for="email">Email<span class="req">*</span></label>
+          <input class="form-input" type="email" id="email" name="email" required>
+        </div>
+        <div class="form-field">
+          <label for="phone">Phone number</label>
+          <input class="form-input" type="tel" id="phone" name="phone">
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="help">How can we help?</label>
+        <select class="form-select" id="help" name="help">
+          <option value="">Select one</option>
+          <option value="upcoming-journeys">Upcoming Journeys</option>
+          <option value="private-group-booking">Private / Group Booking</option>
+          <option value="collaboration">Collaboration</option>
+          <option value="general-enquiry">General Enquiry</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <span class="checkbox-group-label">What draws you most?</span>
+        <div class="checkbox-grid">
+          <label class="check-item">
+            <input type="checkbox" name="draws" value="sacred-site">
+            <span class="lbl">Sacred site access</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="draws" value="plant-medicine">
+            <span class="lbl">Plant medicine work</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="draws" value="luxury">
+            <span class="lbl">Luxury and comfort</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="draws" value="spiritual">
+            <span class="lbl">Spiritual transformation</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="draws" value="integration">
+            <span class="lbl">Integration support</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="draws" value="other">
+            <span class="lbl">Other</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="message">Message</label>
+        <textarea class="form-textarea" id="message" name="message" placeholder="Tell us what matters to you"></textarea>
+      </div>
+
+      <div class="terms-row">
+        <input type="checkbox" id="terms" name="terms" required>
+        <label for="terms">I agree to the terms and conditions</label>
+      </div>
+
+      <button class="btn-submit" type="submit">Submit</button>
+    </form>
+
+    <!-- Sign-up card -->
+    <article class="signup-card">
+      <span class="signup-mark" aria-hidden="true"></span>
+      <h3>Sign up to get notified<br>of future journeys</h3>
+      <form class="signup-form mc-signup" action="https://instagram.us17.list-manage.com/subscribe/post?u=4c775b67544f858d26cd31d0a&amp;id=5cca6c6e4f&amp;f_id=00f0d9e3f0" method="post">
+        <input type="email" name="EMAIL" placeholder="Your email" aria-label="Your email" required>
+        <button type="submit">Get notified</button>
+        <div aria-hidden="true" style="position:absolute;left:-5000px;"><input type="text" name="b_4c775b67544f858d26cd31d0a_5cca6c6e4f" tabindex="-1" value=""></div>
+      </form>
+    </article>
+
+  </div>
+</section>
+
+<!-- ── INSTAGRAM ───────────────────────────────────── -->
+<section class="instagram-feed" data-screen-label="Instagram">
+  <script src="https://elfsightcdn.com/platform.js" async></script>
+  <div class="elfsight-app-26f3251d-0988-40a5-a153-fbbe3986d1cd" data-elfsight-app-lazy></div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────── -->
+<footer class="footer panel" data-screen-label="Footer">
+  <div class="footer-logo" aria-hidden="true"></div>
+
+  <a href="https://www.instagram.com/themodernashram/" class="footer-instagram" aria-label="Instagram" target="_blank" rel="noopener">
+    <img src="assets/images/Instagram Icon 28 x 28px DARK GREEN.svg" alt="" width="28" height="28">
+  </a>
+
+  <nav class="footer-nav" aria-label="Footer">
+    <a href="home.html">Home</a>
+    <a href="journeys.html">Journeys</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <div class="footer-divider" aria-hidden="true"></div>
+
+  <div class="footer-legal">
+    <p class="footer-legal-left">© 2026 The Modern Ashram</p>
+    <div class="footer-legal-right">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-of-use.html">Terms of Use</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* canonical nav hamburger toggle — keep in sync across all pages */
+  (function () {
+    const burger = document.querySelector('.nav-burger');
+    const navLinks = document.querySelector('.nav-links');
+    const nav = document.querySelector('.nav');
+    if (!burger || !navLinks || !nav) return;
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const expanded = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!expanded));
+    });
+    navLinks.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') burger.setAttribute('aria-expanded', 'false');
+    });
+    document.addEventListener('click', function (e) {
+      if (!nav.contains(e.target)) burger.setAttribute('aria-expanded', 'false');
+    });
+  })();
+</script>
+
+<script>
+  /* MailChimp signup handler — posts via JSONP, then redirects to signup-success.html */
+  (function () {
+    var forms = document.querySelectorAll('form.mc-signup');
+    if (!forms.length) return;
+    var redirected = false;
+    function go() { if (redirected) return; redirected = true; window.location.href = 'signup-success.html'; }
+    window.mcSignupCallback = go;
+    forms.forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var params = new URLSearchParams();
+        new FormData(form).forEach(function (v, k) { params.append(k, v); });
+        var url = form.action.replace('/post?', '/post-json?') + '&' + params.toString() + '&c=mcSignupCallback';
+        var s = document.createElement('script'); s.src = url; document.body.appendChild(s);
+        setTimeout(go, 4000);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Modern Ashram</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Work+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
+<style>
+  /* Local font fallbacks */
+  @font-face { font-family: "Work Sans Local"; src: url("assets/fonts/WorkSans-VariableFont_wght.ttf") format("truetype"); font-weight: 100 900; font-style: normal; }
+  @font-face { font-family: "Work Sans Local"; src: url("assets/fonts/WorkSans-Italic-VariableFont_wght.ttf") format("truetype"); font-weight: 100 900; font-style: italic; }
+  @font-face { font-family: "Gloock Local"; src: url("assets/fonts/Gloock-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; }
+
+  :root {
+    /* Brand palette — only these seven */
+    --c-deep-teal:    #1F3136;
+    --c-forest-green: #547063;
+    --c-dusty-mauve:  #9A8480;
+    --c-warm-sand:    #B68E73;
+    --c-blush:        #E2CCC3;
+    --c-sage-mist:    #D1DFDC;
+    --c-cream:        #F7F3EC;
+
+    --font-display: "Gloock", "Gloock Local", Georgia, serif;
+    --font-body:    "Work Sans", "Work Sans Local", system-ui, sans-serif;
+
+    --radius-section: 22px;
+    --radius-card:    16px;
+    --radius-btn:     8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: #FFFBFB;
+    color: var(--c-deep-teal);
+    -webkit-font-smoothing: antialiased;
+    text-wrap: pretty;
+    line-height: 1.6;
+    padding: 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  img, svg { display: block; max-width: 100%; }
+
+  /* .page wrapper removed — body is now the flex container, matching Eternal Nile */
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+    border-radius: var(--radius-btn);
+    padding: 10px 32px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .btn:hover  { opacity: 0.88; }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary {
+    background: linear-gradient(to right, var(--c-deep-teal) 0%, var(--c-forest-green) 100%);
+    color: #fff;
+  }
+  .btn-ghost {
+    background: rgba(249,248,244,0.18);
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .btn-light {
+    background: #fff;
+    color: var(--c-deep-teal);
+  }
+
+  /* ────────── NAV (canonical — keep in sync across all pages) ────────── */
+  .nav {
+    background: #FFFBFB;
+    height: 96px;
+    padding: 0 60px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    position: relative;
+    border-radius: 22px;
+  }
+  .nav-burger {
+    display: none;
+    width: 32px; height: 32px;
+    border: none; background: transparent; cursor: pointer; padding: 0;
+    flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+    grid-column: 1; justify-self: start;
+  }
+  .nav-burger span {
+    display: block; width: 22px; height: 2px; background: #1F3136; border-radius: 1px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .nav-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    justify-self: start; grid-column: 1;
+  }
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400;
+    color: #1F3136; text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-links .has-caret { display: inline-flex; align-items: center; gap: 6px; }
+  .nav-links .has-caret::after {
+    content: ""; width: 10px; height: 5px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'><path d='M5 5L0 0h10z'/></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'><path d='M5 5L0 0h10z'/></svg>") no-repeat center / contain;
+    transition: transform 0.2s ease;
+  }
+  .nav-dropdown { position: relative; display: flex; align-items: center; }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: #fffbfb;
+    border-radius: 10px;
+    padding: 8px 0;
+    min-width: 220px;
+    box-shadow: 0 8px 24px rgba(31,49,54,0.12), 0 2px 6px rgba(31,49,54,0.06);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 100;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown:focus-within .nav-dropdown-menu {
+    opacity: 1; visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .nav-dropdown:hover .has-caret::after { transform: rotate(180deg); }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400;
+    color: #1F3136;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.15s ease, opacity 0.15s ease;
+    border-radius: 6px; margin: 2px 6px;
+  }
+  .nav-dropdown-menu a:hover { background: #F7F3EC; opacity: 1; }
+  .nav-logo {
+    justify-self: center;
+    width: 82px; height: 77px;
+    background: url("assets/images/The Modern Ashram TOP NAV LOGO.svg") center / contain no-repeat;
+    grid-column: 2;
+  }
+  .nav-cta {
+    justify-self: end;
+    background: linear-gradient(270deg, #547063 0%, #1F3136 100%);
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-family: var(--font-body); font-weight: 500; font-size: 16px;
+    line-height: 1.4;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: opacity 0.2s;
+    grid-column: 3;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+  @media (max-width: 1024px) {
+    .nav { display: flex; align-items: center; gap: 12px; height: 72px; padding: 0 20px; grid-template-columns: none; column-gap: 0; }
+    .nav-burger { display: flex; order: 3; align-self: center; flex-shrink: 0; margin-left: 14px; }
+    .nav-links {
+      position: absolute;
+      top: calc(100% + 9px); left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 0;
+      background: #FFFBFB; border-radius: 16px; padding: 16px;
+      box-shadow: 0 12px 30px rgba(31,49,54,0.15);
+      opacity: 0; visibility: hidden; transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      z-index: 50;
+    }
+    .nav-burger[aria-expanded="true"] ~ .nav-links { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-links a { display: block; padding: 12px 16px; border-radius: 8px; font-size: 16px; }
+    .nav-links a:hover { opacity: 1; background: #F7F3EC; }
+    .nav-dropdown { display: block; align-items: stretch; }
+    .nav-dropdown-menu {
+      position: static; transform: none; box-shadow: none;
+      opacity: 1; visibility: visible;
+      padding: 4px 0 8px 16px; background: transparent; min-width: 0;
+    }
+    .nav-dropdown-menu a { padding: 10px 16px; font-size: 14px; }
+    .nav-dropdown:hover .has-caret::after,
+    .nav-dropdown:focus-within .has-caret::after { transform: none; }
+    .nav-logo { width: 56px; height: 61px; order: 1; align-self: center; flex-shrink: 0; }
+    .nav-cta { padding: 9px 20px; font-size: 14px; order: 2; align-self: center; flex-shrink: 0; margin-left: auto; }
+  }
+  @media (max-width: 767px) {
+    .nav { padding: 0 14px; height: 60px; }
+    .nav-logo { width: 46px; height: 50px; }
+    .nav-cta { padding: 8px 16px; font-size: 13px; }
+    .nav-links { padding: 12px; border-radius: 12px; }
+  }
+
+  /* ────────── HERO ────────── */
+  .hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    height: calc(100vh - 123px);
+    min-height: 720px;
+    background:
+      linear-gradient(rgba(31,49,54,0.30), rgba(31,49,54,0.30)),
+      url("assets/images/Temple Column.jpeg") center / cover no-repeat;
+    color: #fff;
+  }
+  .hero-content {
+    position: absolute; inset: 0;
+    padding: 30px 60px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+  }
+  .hero-monogram {
+    width: 200px; height: 217px;
+    flex-shrink: 0;
+    background: url("assets/images/The Modern Ashram Logo HERO.svg") center / contain no-repeat;
+    margin-top: 50px;
+  }
+  .hero-wordmark {
+    margin-top: 14px;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.36em;
+    color: #fff;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(40px, 5.4vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.012em;
+    color: #fff;
+    margin-top: 40px;
+    max-width: 1065px;
+  }
+  .hero-subtitle {
+    font-family: var(--font-body);
+    font-size: 19px;
+    line-height: 1.5;
+    color: #fff;
+    margin-top: 28px;
+    max-width: 685px;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 24px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero-scroll {
+    position: absolute;
+    left: 50%; bottom: 36px;
+    transform: translateX(-50%);
+    width: 66px; height: 66px;
+    border-radius: 50%;
+    background: rgba(217,217,217,0.4);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .hero-scroll:hover { opacity: 0.7; }
+  .hero-scroll::after {
+    content: ""; width: 24px; height: 24px;
+    background: #eaeaea;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 16.5c-.3 0-.6-.1-.8-.3l-7-7c-.4-.4-.4-1 0-1.4s1-.4 1.4 0L12 14.1l6.4-6.4c.4-.4 1-.4 1.4 0s.4 1 0 1.4l-7 7c-.2.2-.5.3-.8.3z'/></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 16.5c-.3 0-.6-.1-.8-.3l-7-7c-.4-.4-.4-1 0-1.4s1-.4 1.4 0L12 14.1l6.4-6.4c.4-.4 1-.4 1.4 0s.4 1 0 1.4l-7 7c-.2.2-.5.3-.8.3z'/></svg>") no-repeat center / contain;
+  }
+
+  /* ────────── INTRO / WELCOME ────────── */
+  .intro {
+    background: #FFFBFB;
+    padding: 110px 60px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .intro-eyebrow {
+    font-family: "Work Sans", "Work Sans Local", sans-serif;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.5;
+    letter-spacing: 0.08em;
+    color: #547063;
+    text-align: center;
+    text-transform: none;
+  }
+  .intro-heading {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 60px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--c-deep-teal);
+    margin-top: 16px;
+  }
+  .intro-body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--c-deep-teal);
+    max-width: 780px;
+    margin-top: 28px;
+  }
+  .intro-body + .intro-body { margin-top: 18px; }
+  .intro-body strong { font-weight: 600; color: #1F3136; }
+  .intro .btn-primary {
+    margin-top: 40px;
+    background: linear-gradient(to right, #1f3136, #547063) !important;
+    color: #fff;
+    border-radius: 8px;
+    font-family: "Work Sans", "Work Sans Local", sans-serif;
+    font-weight: 500;
+  }
+
+  /* ────────── EVENT PANEL ────────── */
+  .event-panel {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    min-height: 510px;
+    color: #fff;
+  }
+  .event-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center 80%;
+    background-repeat: no-repeat;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.45s ease, visibility 0.45s;
+  }
+  .event-slide.active { opacity: 1; visibility: visible; }
+  .event-avatars {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    display: flex;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .event-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background-size: cover;
+    background-position: center;
+    background-color: #9A8480;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .event-avatar + .event-avatar { margin-left: -16px; }
+  .event-content {
+    text-align: center;
+    max-width: 760px;
+    padding: 64px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .event-eyebrow {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 19px;
+    letter-spacing: 0.04em;
+    color: #fff;
+    line-height: 1.5;
+  }
+  .event-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: #fff;
+    white-space: nowrap;
+    margin-top: 4px;
+    margin-bottom: 14px;
+  }
+  .event-date {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 19px;
+    color: #fff;
+    line-height: 1.5;
+    margin-top: 6px;
+    margin-bottom: -8px;
+  }
+  .event-desc {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+    max-width: 500px;
+  }
+  .event-content .btn {
+    margin-top: 18px;
+    background: #D1DFDC !important;
+    color: #1F3136 !important;
+    border-radius: 8px;
+    font-family: "Work Sans", "Work Sans Local", sans-serif;
+    font-weight: 500;
+    box-shadow: none;
+  }
+
+  .arrow-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 66px; height: 66px;
+    border-radius: 50%;
+    background: rgba(217,217,217,0.2);
+    display: flex; align-items: center; justify-content: center;
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+    cursor: pointer; border: none;
+    transition: opacity 0.2s;
+    z-index: 2;
+  }
+  .arrow-btn:hover { opacity: 0.7; }
+  .arrow-btn::before {
+    content: ""; width: 26px; height: 26px;
+    background: #eaeaea;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M15.7 4.3a1 1 0 010 1.4L9.4 12l6.3 6.3a1 1 0 11-1.4 1.4l-7-7a1 1 0 010-1.4l7-7a1 1 0 011.4 0z' fill='%23000'/></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M15.7 4.3a1 1 0 010 1.4L9.4 12l6.3 6.3a1 1 0 11-1.4 1.4l-7-7a1 1 0 010-1.4l7-7a1 1 0 011.4 0z' fill='%23000'/></svg>") no-repeat center / contain;
+  }
+  .arrow-btn.prev { left: 44px; }
+  .arrow-btn.next { right: 44px; }
+  .arrow-btn.next::before { transform: scaleX(-1); }
+
+  /* ────────── EMAIL CTA ────────── */
+  .email-cta {
+    position: relative;
+    border-radius: var(--radius-section);
+    overflow: hidden;
+    background:
+      linear-gradient(rgba(133,132,132,0.45), rgba(133,132,132,0.45)),
+      url("assets/images/beautiful-view-famous-antelope-canyon-arizona-usa.jpg") center / cover no-repeat;
+    padding: 58px 62px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 32px;
+    min-height: 248px;
+  }
+  .email-cta-heading {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 45px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #fff;
+    white-space: pre-line;
+  }
+  .email-cta-form {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .email-cta-input {
+    width: 528px;
+    border-radius: var(--radius-btn);
+    border: none;
+    background: rgba(255,255,255,0.65);
+    padding: 10px 26px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--c-deep-teal);
+    line-height: 1.5;
+  }
+  .email-cta-input::placeholder { color: var(--c-deep-teal); opacity: 1; }
+  .email-cta-form .btn { padding: 10px 32px; }
+
+  /* ────────── FEATURE SECTION ────────── */
+  /* Auto-scrolling card ticker sits in the upper third; text sits clearly BELOW the cards */
+  .feature {
+    position: relative;
+    min-height: 1700px;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-section);
+    overflow: hidden;
+    background:
+      linear-gradient(180deg,
+        rgba(0,0,0,0.22) 0%,
+        rgba(0,0,0,0.22) 100%),
+      url("assets/images/rear-view-man-standing-cave.jpg") center bottom / cover no-repeat,
+      #1a1410;
+  }
+  .feature-cards {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 90px 0 40px;
+    height: auto;
+  }
+  .feature-cards-track {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    width: max-content;
+    animation: feature-marquee 44s linear infinite;
+  }
+  @keyframes feature-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .feature-cards-track { animation-duration: 120s; }
+  }
+  .feature-cards-track > .feature-card,
+  .feature-card {
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    width: 264px !important;
+    height: 336px !important;
+    min-width: 264px !important;
+    max-width: 264px !important;
+    min-height: 336px !important;
+    max-height: 336px !important;
+    border-radius: 16px !important;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    object-fit: cover;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  }
+  .feature-card > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+  /* Uniform card SIZE — alternating stagger: every other card sits lower and has its
+     bottom cropped by the row's overflow: hidden, matching the reference rhythm */
+  .feature-cards-track > .feature-card { margin-top: 0; }
+  .feature-cards-track > .feature-card:nth-child(2n+1) { margin-top: 80px; }
+  .feature-cards-track > .feature-card:nth-child(2n+2) { margin-top: 0;   }
+
+  .feature-card.fc-1 { background-image: url("assets/images/Horus Temple Relief.jpeg"); }
+  .feature-card.fc-2 { background-image: url("assets/images/Earth Texture.jpeg"); }
+  .feature-card.fc-3 { background-image: url("assets/images/WhatsApp Image 2026-01-23 at 17.51.29.jpeg"); }
+  .feature-card.fc-4 { background-image: url("assets/images/Sun on Water.jpeg"); }
+  .feature-card.fc-5 { background-image: url("assets/images/WhatsApp Image 2026-01-23 at 17.52.38.jpeg"); }
+  .feature-card.fc-6 { background-image: url("assets/images/WhatsApp Image 2026-01-23 at 17.51.47.jpeg"); }
+
+  .feature-content {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    padding: 40px 60px 110px;
+    margin: 20px auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    max-width: 800px;
+  }
+  .feature-eyebrow {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 19px;
+    letter-spacing: 0.04em;
+    color: #fff;
+    text-transform: none;
+  }
+  .feature-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 60px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: #fff;
+  }
+  .feature-body {
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    color: #fff;
+    max-width: 640px;
+    margin: 18px 0;
+  }
+  .feature-body strong { font-weight: 600; color: #fff; }
+  .feature-content .btn { margin-top: 8px; padding: 10px 32px; }
+
+  /* ────────── TESTIMONIALS ────────── */
+  .testimonials {
+    position: relative;
+    border-radius: var(--radius-section);
+    background: var(--c-sage-mist);
+    padding: 80px 160px;
+    height: 620px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+  .testimonial-overline {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 19px;
+    letter-spacing: 0.04em;
+    color: #547063;
+    line-height: 1.5;
+  }
+  .testimonial-eyebrow {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(29px, 3.3vw, 43px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--c-deep-teal);
+  }
+  .testimonial-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+  }
+  .testimonial-quote {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.36;
+    color: #1f3136;
+    max-width: 780px;
+    transition: opacity 400ms ease;
+  }
+  .testimonial-quote.is-fading { opacity: 0; }
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: opacity 400ms ease;
+  }
+  .testimonial-author.is-fading { opacity: 0; }
+  .testimonial-name {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 18px;
+    color: #1f3136;
+    line-height: 1.5;
+  }
+
+  .arrow-btn-light {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: #fff;
+    border: none;
+    color: #1f3136;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(31,49,54,0.08);
+  }
+  .arrow-btn-light:hover { opacity: 0.85; }
+  .arrow-btn-light:active { transform: translateY(-50%) scale(0.96); }
+  .arrow-btn-light::before {
+    content: ""; width: 18px; height: 18px;
+    background: #1f3136;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M15.7 4.3a1 1 0 010 1.4L9.4 12l6.3 6.3a1 1 0 11-1.4 1.4l-7-7a1 1 0 010-1.4l7-7a1 1 0 011.4 0z'/></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M15.7 4.3a1 1 0 010 1.4L9.4 12l6.3 6.3a1 1 0 11-1.4 1.4l-7-7a1 1 0 010-1.4l7-7a1 1 0 011.4 0z'/></svg>") no-repeat center / contain;
+  }
+  .arrow-btn-light.prev { left: 42px; }
+  .arrow-btn-light.next { right: 42px; }
+  .arrow-btn-light.next::before { transform: scaleX(-1); }
+
+  /* ────────── INSTAGRAM ────────── */
+  .instagram {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    background: transparent;
+  }
+  .instagram-tile {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 250ms ease-in-out;
+  }
+  .instagram-tile::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.55);
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .instagram-tile::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 28px; height: 28px;
+    background: #fff;
+    -webkit-mask: url("assets/images/Instagram Icon 28 x 28px.svg") no-repeat center / contain;
+            mask: url("assets/images/Instagram Icon 28 x 28px.svg") no-repeat center / contain;
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .instagram-tile:hover { transform: scale(1.03); }
+  .instagram-tile:hover::before,
+  .instagram-tile:hover::after { opacity: 1; }
+  .instagram-tile:nth-child(1) { background-image: url("assets/images/IMG_6427.JPG"); background-size: cover; background-position: center; }
+  .instagram-tile:nth-child(2) { background-image: url("assets/images/AdobeStock_1598281600.jpeg"); background-size: cover; background-position: center; }
+  .instagram-tile:nth-child(3) { background-image: url("assets/images/Sphinx.png"); background-size: cover; background-position: center; }
+  .instagram-tile:nth-child(4) { background-image: url("assets/images/AdobeStock_355522063.jpeg"); background-size: cover; background-position: center; }
+  .instagram-tile:nth-child(5) { background-image: url("assets/images/Deluxe Cabin.JPEG"); background-size: cover; background-position: center; }
+  .instagram-tile:nth-child(6) { background-image: url("assets/images/AdobeStock_523369556.jpeg"); background-size: cover; background-position: center; }
+  .instagram-logo { display: none; }
+
+  /* ────────── FOOTER ────────── */
+  .footer {
+    background: #FFFBFB;
+    padding: 90px 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+  }
+  .footer-logo {
+    width: 220px; height: 240px;
+    background: url("assets/images/The Modern Ashram Logo FOOTER.svg") center / contain no-repeat;
+  }
+  .footer-nav {
+    display: flex; align-items: center; gap: 64px;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .footer-nav a {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--c-deep-teal);
+    text-decoration: none;
+    line-height: 1.5;
+    transition: opacity 0.2s;
+  }
+  .footer-nav a:hover { opacity: 0.6; }
+
+  .footer-instagram {
+    width: 28px; height: 28px;
+    text-decoration: none;
+    display: inline-flex;
+    transition: opacity 0.2s;
+  }
+  .footer-instagram:hover { opacity: 0.7; }
+  .footer-instagram img { width: 28px; height: 28px; display: block; }
+
+  .footer-divider {
+    width: 100%;
+    max-width: 100%;
+    height: 1px;
+    background: rgba(31, 49, 54, 0.4);
+    margin: 16px 0 0;
+  }
+  .footer-legal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 16px;
+  }
+  .footer-legal-left {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: #1f3136;
+  }
+  .footer-legal-right { display: flex; gap: 40px; flex-wrap: wrap; }
+  .footer-legal-right a {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: #1f3136;
+    text-decoration: none;
+  }
+  .footer-legal-right a:hover { opacity: 0.7; }
+
+  /* ────────── RESPONSIVE ────────── */
+  @media (max-width: 1180px) {
+    .feature-cards { gap: 14px; padding: 40px 32px 0; }
+    .testimonials  { padding: 80px 110px; }
+    .feature-title { font-size: 48px; }
+    .intro-heading { font-size: 52px; }
+  }
+
+  @media (max-width: 1024px) {
+    .email-cta { padding: 48px 40px; gap: 24px; }
+    .email-cta-heading { font-size: 32px; }
+    .email-cta-input { width: 280px; }
+    .email-cta-form .btn { padding: 10px 20px; font-size: 14px; }
+  }
+
+  @media (max-width: 767px) {
+    body { gap: 16px; }
+
+    .hero { height: auto; min-height: 820px; border-radius: 12px; }
+    .hero-content { padding: 90px 30px 60px; }
+    .hero-monogram { width: 280px; height: 304px; margin-top: 0; }
+    .hero-title { font-size: 38px; margin-top: 76px; }
+    .hero-subtitle { font-size: 14px; margin-top: 22px; }
+    .hero-actions { flex-direction: column; width: 100%; max-width: 320px; margin-top: 36px; gap: 12px; }
+    .hero-actions .btn { width: 100%; font-size: 14px; padding: 10px 24px; }
+    .hero-scroll { width: 46px; height: 46px; bottom: 24px; }
+    .hero-scroll::after { width: 19px; height: 19px; }
+
+    .intro { padding: 80px 24px; gap: 0; }
+    .intro-heading { font-size: 38px; margin-top: 10px; }
+    .intro-body { font-size: 14px; margin-top: 20px; }
+
+    .event-panel { min-height: 520px; border-radius: 12px; }
+    .event-content { padding: 48px 24px 100px; gap: 12px; }
+    .event-title { font-size: 34px; white-space: normal; }
+    .arrow-btn {
+      width: 44px; height: 44px;
+      top: auto; bottom: 24px;
+      transform: none;
+    }
+    .arrow-btn::before { width: 18px; height: 18px; }
+    .arrow-btn.prev { left: calc(50% - 52px); }
+    .arrow-btn.next { right: calc(50% - 52px); }
+
+    .email-cta { grid-template-columns: 1fr; padding: 32px 24px; min-height: 0; gap: 20px; border-radius: 12px; }
+    .email-cta-heading { font-size: 28px; text-align: center; }
+    .email-cta-form { flex-direction: column; align-items: stretch; gap: 12px; width: 100%; }
+    .email-cta-input { width: 100%; height: 48px; font-size: 14px; padding: 0 16px; }
+    .email-cta-form .btn { height: 48px; padding: 0 16px; font-size: 14px; width: 100%; }
+
+    .feature-cards { padding: 40px 0 0; }
+    .feature-content { padding: 30px 24px 70px; gap: 14px; margin-top: 0; }
+    .feature-eyebrow { font-size: 17px; text-wrap: balance; max-width: 18em; }
+    .feature-title { font-size: 32px; }
+    .feature-body { font-size: 14px; line-height: 1.45; margin: 8px 0; }
+    .intro-eyebrow { font-size: 17px; }
+    .event-eyebrow { font-size: 17px; }
+    .testimonial-overline { font-size: 17px; }
+
+    .testimonials { padding: 60px 30px 100px; height: auto; min-height: 560px; gap: 12px; border-radius: 12px; }
+    .testimonial-quote { font-size: 17px; }
+    .arrow-btn-light { width: 44px; height: 44px; top: auto; bottom: 30px; transform: none; }
+    .arrow-btn-light.prev { left: calc(50% - 56px); }
+    .arrow-btn-light.next { right: calc(50% - 56px); }
+    .arrow-btn-light::before { width: 16px; height: 16px; }
+
+    .instagram { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+
+    .footer { padding: 60px 24px 30px; gap: 22px; }
+    .footer-logo { width: 130px; height: 142px; }
+    .footer-nav { gap: 32px; }
+    .footer-legal { flex-direction: column; gap: 12px; padding-top: 12px; }
+    .footer-legal-right { flex-direction: column; gap: 12px; align-items: center; }
+  }
+</style>
+
+<template id="__bundler_thumbnail" data-bg-color="#fffbfb">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <!-- Nav bar -->
+    <rect x="0" y="0" width="1200" height="80" fill="#fffbfb"/>
+    <!-- Logo monogram -->
+    <text x="572" y="56" font-size="32" font-family="serif" fill="#9a8480">M</text>
+    <text x="594" y="56" font-size="32" font-family="serif" fill="#547063">A</text>
+    <!-- Hero full-bleed panel -->
+    <rect x="16" y="90" width="1168" height="580" rx="20" fill="#1f3136" opacity="0.85"/>
+    <!-- Hero monogram large -->
+    <text x="556" y="360" font-size="80" font-family="serif" fill="#9a8480" opacity="0.6">M</text>
+    <text x="614" y="360" font-size="80" font-family="serif" fill="#547063" opacity="0.6">A</text>
+    <!-- Hero title bar -->
+    <rect x="280" y="400" width="640" height="36" rx="4" fill="#ffffff" opacity="0.2"/>
+    <rect x="360" y="452" width="480" height="20" rx="4" fill="#ffffff" opacity="0.15"/>
+    <!-- CTA buttons -->
+    <rect x="436" y="498" width="140" height="40" rx="8" fill="#ffffff" opacity="0.9"/>
+    <rect x="592" y="498" width="160" height="40" rx="8" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.7"/>
+    <!-- Footer hint -->
+    <rect x="0" y="700" width="1200" height="100" fill="#fffbfb"/>
+    <text x="572" y="760" font-size="20" font-family="serif" fill="#9a8480">M</text>
+    <text x="590" y="760" font-size="20" font-family="serif" fill="#547063">A</text>
+  </svg>
+</template>
+</head>
+<body>
+
+<!-- ── NAV (canonical — keep in sync across all pages) ───────────────── -->
+<nav class="nav" aria-label="Primary" data-screen-label="Nav">
+    <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-menu">
+      <a href="home.html">Home</a>
+      <div class="nav-dropdown">
+        <a href="journeys.html" class="has-caret">Journeys</a>
+        <div class="nav-dropdown-menu">
+          <a href="the-eternal-nile.html">The Eternal Nile</a>
+          <a href="ancient-egyptian-odyssey.html">Ancient Egyptian Odyssey</a>
+        </div>
+      </div>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="home.html" class="nav-logo" aria-label="The Modern Ashram"></a>
+    <a href="contact.html" class="nav-cta">Enquire Now</a>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────── -->
+  <section class="hero" data-screen-label="Hero">
+    <div class="hero-content">
+      <div class="hero-monogram" aria-hidden="true"></div>
+      <h1 class="hero-title">Transformational<br>Sacred Journeys</h1>
+      <p class="hero-subtitle">Bridging ancient wisdom to the modern world</p>
+      <div class="hero-actions">
+        <a href="contact.html" class="btn btn-light">Enquire Now</a>
+      </div>
+    </div>
+
+    <a href="#intro" class="hero-scroll" aria-label="Scroll to next section"></a>
+  </section>
+
+  <!-- ── INTRO / WELCOME ─────────────────────────────── -->
+  <section class="intro" id="intro" data-screen-label="Welcome">
+    <p class="intro-eyebrow">Welcome to</p>
+    <h2 class="intro-heading">The Modern Ashram</h2>
+    <p class="intro-body"><strong>A bridge where ancient wisdom meets modern transformation.</strong></p>
+    <p class="intro-body">We guide those called to go deeper through <strong>immersive journeys</strong> — across sacred lands, <strong>ancient sites</strong>, and the depth of their own <strong>inner world</strong> — creating safe, <strong>intentional spaces</strong> to heal, expand, and <strong>return</strong> to themselves.</p>
+    <a href="#" class="btn btn-primary">Find Out More</a>
+    <!-- removed-divider --></section>
+
+  <!-- ── NEXT JOURNEY CAROUSEL ──────────────────────── -->
+  <section class="event-panel" data-screen-label="Next Journey">
+    <button class="arrow-btn prev" aria-label="Previous journey"></button>
+    <div class="event-slide active" style="background-image: linear-gradient(rgba(31,49,54,0.55), rgba(31,49,54,0.55)), url('assets/images/Block Photo to enter the journey.jpg'); background-position: center 30%;">
+      <div class="event-content">
+        <p class="event-eyebrow">What's next this year</p>
+        <p class="event-title">The Eternal Nile</p>
+        <p class="event-date">5 - 15 October, 2026</p>
+        <p class="event-desc">A ten-day journey into Egypt's sacred heart, where comfort meets the profound work of transformation.</p>
+        <a href="the-eternal-nile.html" class="btn btn-light">Find Out More</a>
+      </div>
+    </div>
+    <div class="event-slide" style="background-image: linear-gradient(rgba(31,49,54,0.55), rgba(31,49,54,0.55)), url('assets/images/IMG_6447.JPG');">
+      <div class="event-content">
+        <p class="event-eyebrow">What's next this year</p>
+        <p class="event-title">Ancient Egyptian Odyssey</p>
+        <p class="event-date">25 October – 3 November, 2026</p>
+        <p class="event-desc">A ten-day journey into Egypt's sacred heart, where comfort meets the profound work of transformation.</p>
+        <a href="ancient-egyptian-odyssey.html" class="btn btn-light">Find Out More</a>
+      </div>
+    </div>
+    <button class="arrow-btn next" aria-label="Next journey"></button>
+  </section>
+
+  <!-- ── EMAIL CTA ──────────────────────────────────── -->
+  <section class="email-cta" data-screen-label="Email Signup">
+    <h2 class="email-cta-heading">Sign up to get notified
+of future journeys</h2>
+    <form class="email-cta-form mc-signup" action="https://instagram.us17.list-manage.com/subscribe/post?u=4c775b67544f858d26cd31d0a&amp;id=5cca6c6e4f&amp;f_id=00f0d9e3f0" method="post">
+      <input class="email-cta-input" type="email" name="EMAIL" placeholder="Your email" aria-label="Your email" required />
+      <button type="submit" class="btn btn-primary">Get notified</button>
+      <div aria-hidden="true" style="position:absolute;left:-5000px;"><input type="text" name="b_4c775b67544f858d26cd31d0a_5cca6c6e4f" tabindex="-1" value=""></div>
+    </form>
+  </section>
+
+  <!-- ── FEATURE / ARE YOU READY ────────────────────── -->
+  <section class="feature" data-screen-label="Feature">
+    <div class="feature-cards" aria-hidden="true">
+      <div class="feature-cards-track">
+        <!-- set A -->
+        <div class="feature-card fc-1"></div>
+        <div class="feature-card fc-2"></div>
+        <div class="feature-card fc-3"></div>
+        <div class="feature-card fc-4"></div>
+        <div class="feature-card fc-5"></div>
+        <div class="feature-card fc-6"></div>
+        <div class="feature-card fc-1"></div>
+        <div class="feature-card fc-2"></div>
+        <div class="feature-card fc-3"></div>
+        <div class="feature-card fc-4"></div>
+        <div class="feature-card fc-5"></div>
+        <div class="feature-card fc-6"></div>
+        <!-- set B (duplicate for seamless loop) -->
+        <div class="feature-card fc-1"></div>
+        <div class="feature-card fc-2"></div>
+        <div class="feature-card fc-3"></div>
+        <div class="feature-card fc-4"></div>
+        <div class="feature-card fc-5"></div>
+        <div class="feature-card fc-6"></div>
+        <div class="feature-card fc-1"></div>
+        <div class="feature-card fc-2"></div>
+        <div class="feature-card fc-3"></div>
+        <div class="feature-card fc-4"></div>
+        <div class="feature-card fc-5"></div>
+        <div class="feature-card fc-6"></div>
+      </div>
+    </div>
+    <div class="feature-content">
+      <p class="feature-eyebrow">Bespoke journeys tailored just for&nbsp;you</p>
+      <h2 class="feature-title">Are you ready to step into a deeper journey?</h2>
+      <p class="feature-body">A curated immersion into <strong>sacred sites</strong>, <strong>ancient wisdom</strong>, and <strong>conscious exploration</strong> — where <strong>transformation</strong> becomes lived experience.</p>
+      <a href="contact.html" class="btn btn-light">Enquire Now</a>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ───────────────────────────────── -->
+  <section class="testimonials" data-screen-label="Guest Reviews">
+    <button class="arrow-btn-light prev" aria-label="Previous testimonial"></button>
+    <p class="testimonial-overline">Praise for the Modern Ashram</p>
+    <p class="testimonial-eyebrow">Guest reviews</p>
+    <div class="testimonial-body">
+      <p class="testimonial-quote" id="testimonial-quote">"Fouad's work has transformed my life! His gentle and grounded presence led a fabulous group of us through a 2-week retreat in Egypt! It was so exquisite, I went a second time! Truly a gift to humanity."</p>
+      <div class="testimonial-author" id="testimonial-author">
+        <p class="testimonial-name">Rosie Cutter</p>
+      </div>
+    </div>
+    <button class="arrow-btn-light next" aria-label="Next testimonial"></button>
+  </section>
+  <script>
+  (function(){
+    const data = [
+      { quote: "\"Fouad's work has transformed my life! His gentle and grounded presence led a fabulous group of us through a 2-week retreat in Egypt! It was so exquisite, I went a second time! Truly a gift to humanity.\"", name: "Rosie Cutter" },
+      { quote: "\"My trip with the Modern Ashram to Egypt was so incredibly magical, I truly have no words. It was spiritual, educational, and a complete dream come true. Everything was so thoughtfully curated, from the private tours to the beautiful hotels and boats. Our time on the Nile held some of the most magical and unexpected moments of the entire journey. I'm so grateful to have made lifelong friends along the way. Since I was a child, experiencing the pyramids has been a dream of mine, and this trip not only fulfilled that dream but was beyond anything I could have ever imagined.\"", name: "Jenifer Mccready" },
+      { quote: "\"The Modern Ashram has the best people on the team who genuinely care and are committed to their audience's safety and support. My life has been enormously enriched by my time with them in Egypt. They're a true blessing, and I'm so grateful for them.\"", name: "Brad Steadman" },
+      { quote: "\"My sacred journey in November 2022 was truly spectacular—far beyond anything I could have imagined. Being in such ancient, sacred places with Fouad and The Modern Ashram felt deeply profound, more like a remembrance than a visit. Every detail was held with intention and care, allowing me to fully be present and receive all that Egypt had to offer. I felt completely supported throughout the journey, and it's an experience I will carry with me for the rest of my life.\"", name: "Bill Hendry" },
+      { quote: "\"This trip to Egypt was one of the most incredible experiences of my life. It was like a rebirth of my entire consciousness, and the coming together of more things than I could possibly articulate. Every detail of the trip was thoughtfully curated and top notch. I felt supported by the entire team, and eternally grateful. I have one piece of advice for anyone considering it: GO.\"", name: "Gina Corey" }
+    ];
+    const section = document.querySelector('.testimonials');
+    if (!section) return;
+    const quoteEl = section.querySelector('.testimonial-quote');
+    const authorEl = section.querySelector('.testimonial-author');
+    const nameEl = authorEl.querySelector('.testimonial-name');
+    const prevBtn = section.querySelector('.arrow-btn-light.prev');
+    const nextBtn = section.querySelector('.arrow-btn-light.next');
+    let i = 0, busy = false;
+    function go(delta) {
+      if (busy) return;
+      busy = true;
+      i = (i + delta + data.length) % data.length;
+      quoteEl.classList.add('is-fading');
+      authorEl.classList.add('is-fading');
+      setTimeout(() => {
+        const t = data[i];
+        quoteEl.textContent = t.quote;
+        nameEl.textContent = t.name;
+        quoteEl.classList.remove('is-fading');
+        authorEl.classList.remove('is-fading');
+        setTimeout(() => { busy = false; }, 400);
+      }, 400);
+    }
+    prevBtn.addEventListener('click', () => go(-1));
+    nextBtn.addEventListener('click', () => go(1));
+  })();
+
+  /* canonical nav hamburger toggle — keep in sync across all pages */
+  (function () {
+    const burger = document.querySelector('.nav-burger');
+    const navLinks = document.querySelector('.nav-links');
+    const nav = document.querySelector('.nav');
+    if (!burger || !navLinks || !nav) return;
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const expanded = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!expanded));
+    });
+    navLinks.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') burger.setAttribute('aria-expanded', 'false');
+    });
+    document.addEventListener('click', function (e) {
+      if (!nav.contains(e.target)) burger.setAttribute('aria-expanded', 'false');
+    });
+  })();
+
+  (function () {
+    var panel = document.querySelector('.event-panel');
+    if (!panel) return;
+    var slides = panel.querySelectorAll('.event-slide');
+    if (slides.length < 2) return;
+    var idx = 0;
+    function show(n) {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach(function (s, i) { s.classList.toggle('active', i === idx); });
+    }
+    panel.querySelector('.arrow-btn.prev').addEventListener('click', function () { show(idx - 1); });
+    panel.querySelector('.arrow-btn.next').addEventListener('click', function () { show(idx + 1); });
+  })();
+  </script>
+
+  <!-- ── INSTAGRAM ──────────────────────────────────── -->
+  <!-- ── INSTAGRAM (Elfsight) ──────────────────────── -->
+  <section class="instagram-feed" data-screen-label="Instagram">
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <div class="elfsight-app-26f3251d-0988-40a5-a153-fbbe3986d1cd" data-elfsight-app-lazy></div>
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────────────── -->
+  <footer class="footer" data-screen-label="Footer">
+    <div class="footer-logo" aria-hidden="true"></div>
+
+    <a href="https://www.instagram.com/themodernashram/" class="footer-instagram" aria-label="Instagram" target="_blank" rel="noopener">
+      <img src="assets/images/Instagram Icon 28 x 28px DARK GREEN.svg" alt="" width="28" height="28">
+    </a>
+
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="home.html">Home</a>
+      <a href="journeys.html">Journeys</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="footer-divider" aria-hidden="true"></div>
+
+    <div class="footer-legal">
+      <p class="footer-legal-left">© 2026 The Modern Ashram</p>
+      <div class="footer-legal-right">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-use.html">Terms of Use</a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  /* MailChimp signup handler — posts via JSONP, then redirects to signup-success.html */
+  (function () {
+    var forms = document.querySelectorAll('form.mc-signup');
+    if (!forms.length) return;
+    var redirected = false;
+    function go() { if (redirected) return; redirected = true; window.location.href = 'signup-success.html'; }
+    window.mcSignupCallback = go;
+    forms.forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var params = new URLSearchParams();
+        new FormData(form).forEach(function (v, k) { params.append(k, v); });
+        var url = form.action.replace('/post?', '/post-json?') + '&' + params.toString() + '&c=mcSignupCallback';
+        var s = document.createElement('script'); s.src = url; document.body.appendChild(s);
+        setTimeout(go, 4000);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

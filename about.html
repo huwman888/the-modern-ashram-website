@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - The Modern Ashram</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Work+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:#1F3136; --green:#547063; --mauve:#9A8480; --sand:#B68E73;
+    --blush:#E2CCC3; --sage:#D1DFDC; --cream:#FFFBFB;
+
+    --c-deep-teal:    #1F3136;
+    --c-forest-green: #547063;
+    --c-dusty-mauve:  #9A8480;
+    --c-warm-sand:    #B68E73;
+    --c-blush:        #E2CCC3;
+    --c-sage-mist:    #D1DFDC;
+    --c-cream:        #F7F3EC;
+
+    --font-display: "Gloock", Georgia, serif;
+    --font-body:    "Work Sans", system-ui, sans-serif;
+
+    --radius-section: 22px;
+    --radius-card:    16px;
+    --radius-btn:     8px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    font-family: var(--font-body);
+    color: var(--teal);
+    -webkit-font-smoothing: antialiased;
+    padding: 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  /* ── Typography utilities ─────────────────────── */
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--blush);
+  }
+  .eyebrow.on-light { color: var(--mauve); }
+  .h1 { font-family: var(--font-display); font-size: clamp(40px, 5.4vw, 72px); font-weight: 400; line-height: 1.05; letter-spacing: -0.012em; text-wrap: balance; }
+  .h2 { font-family: var(--font-display); font-size: clamp(34px, 4vw, 56px); font-weight: 400; line-height: 1.08; letter-spacing: -0.012em; text-wrap: balance; }
+  .h3 { font-family: var(--font-display); font-size: clamp(26px, 2.8vw, 40px); font-weight: 400; line-height: 1.15; letter-spacing: -0.005em; text-wrap: balance; }
+  .body-md { font-size: 16px; line-height: 1.7; text-wrap: pretty; }
+  .body-sm { font-size: 14px; line-height: 1.65; text-wrap: pretty; }
+
+  .panel { border-radius: var(--radius-section); overflow: hidden; }
+
+  /* ────────── NAV (canonical — keep in sync across all pages) ────────── */
+  .nav {
+    background: #FFFBFB;
+    height: 96px;
+    padding: 0 60px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    position: relative;
+    border-radius: 22px;
+  }
+  .nav-burger {
+    display: none;
+    width: 32px; height: 32px;
+    border: none; background: transparent; cursor: pointer; padding: 0;
+    flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+    grid-column: 1; justify-self: start;
+  }
+  .nav-burger span {
+    display: block; width: 22px; height: 2px; background: #1F3136; border-radius: 1px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .nav-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    justify-self: start; grid-column: 1;
+  }
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400;
+    color: #1F3136; text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-links .has-caret { display: inline-flex; align-items: center; gap: 6px; }
+  .nav-links .has-caret::after {
+    content: ""; width: 10px; height: 5px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'><path d='M5 5L0 0h10z'/></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'><path d='M5 5L0 0h10z'/></svg>") no-repeat center / contain;
+    transition: transform 0.2s ease;
+  }
+  .nav-dropdown { position: relative; display: flex; align-items: center; }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: #fffbfb;
+    border-radius: 10px;
+    padding: 8px 0;
+    min-width: 220px;
+    box-shadow: 0 8px 24px rgba(31,49,54,0.12), 0 2px 6px rgba(31,49,54,0.06);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 100;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown:focus-within .nav-dropdown-menu {
+    opacity: 1; visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .nav-dropdown:hover .has-caret::after { transform: rotate(180deg); }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400;
+    color: #1F3136;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.15s ease, opacity 0.15s ease;
+    border-radius: 6px; margin: 2px 6px;
+  }
+  .nav-dropdown-menu a:hover { background: #F7F3EC; opacity: 1; }
+  .nav-logo {
+    justify-self: center;
+    width: 82px; height: 77px;
+    background: url("assets/images/The Modern Ashram TOP NAV LOGO.svg") center / contain no-repeat;
+    grid-column: 2;
+  }
+  .nav-cta {
+    justify-self: end;
+    background: linear-gradient(270deg, #547063 0%, #1F3136 100%);
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-family: var(--font-body); font-weight: 500; font-size: 16px;
+    line-height: 1.4;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: opacity 0.2s;
+    grid-column: 3;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+  @media (max-width: 1024px) {
+    .nav { display: flex; align-items: center; gap: 12px; height: 72px; padding: 0 20px; grid-template-columns: none; column-gap: 0; }
+    .nav-burger { display: flex; order: 3; align-self: center; flex-shrink: 0; margin-left: 14px; }
+    .nav-links {
+      position: absolute;
+      top: calc(100% + 9px); left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 0;
+      background: #FFFBFB; border-radius: 16px; padding: 16px;
+      box-shadow: 0 12px 30px rgba(31,49,54,0.15);
+      opacity: 0; visibility: hidden; transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      z-index: 50;
+    }
+    .nav-burger[aria-expanded="true"] ~ .nav-links { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-links a { display: block; padding: 12px 16px; border-radius: 8px; font-size: 16px; }
+    .nav-links a:hover { opacity: 1; background: #F7F3EC; }
+    .nav-dropdown { display: block; align-items: stretch; }
+    .nav-dropdown-menu {
+      position: static; transform: none; box-shadow: none;
+      opacity: 1; visibility: visible;
+      padding: 4px 0 8px 16px; background: transparent; min-width: 0;
+    }
+    .nav-dropdown-menu a { padding: 10px 16px; font-size: 14px; }
+    .nav-dropdown:hover .has-caret::after,
+    .nav-dropdown:focus-within .has-caret::after { transform: none; }
+    .nav-logo { width: 56px; height: 61px; order: 1; align-self: center; flex-shrink: 0; }
+    .nav-cta { padding: 9px 20px; font-size: 14px; order: 2; align-self: center; flex-shrink: 0; margin-left: auto; }
+  }
+  @media (max-width: 767px) {
+    .nav { padding: 0 14px; height: 60px; }
+    .nav-logo { width: 46px; height: 50px; }
+    .nav-cta { padding: 8px 16px; font-size: 13px; }
+    .nav-links { padding: 12px; border-radius: 12px; }
+  }
+
+  /* ────────── INTRO / Three pillars ────────── */
+  .intro {
+    background: var(--cream);
+    padding: 88px 16px 72px;
+    text-align: center;
+  }
+  .intro-inner { width: 100%; }
+  .intro-text { max-width: 720px; margin: 0 auto; }
+  .intro h1 { color: var(--teal); margin-bottom: 56px; }
+  .intro-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--teal);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .intro-body strong { font-weight: 600; }
+  .pillars-img-wrap { padding: 64px 0 0; display: flex; justify-content: center; }
+  .pillars-img { width: 100%; max-width: 1120px; height: auto; display: block; }
+
+  /* ────────── GUIDES (Mission / Vision) ────────── */
+  .guides {
+    background: var(--cream);
+    padding: 80px 0 0;
+  }
+  .section-heading {
+    text-align: center;
+    color: var(--teal);
+    margin-bottom: 88px;
+  }
+  .guides-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+  .guide-card {
+    position: relative;
+    border-radius: var(--radius-section);
+    overflow: hidden;
+    min-height: 900px;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 80px;
+    background-size: cover;
+    background-position: center;
+  }
+  .guide-card.mission {
+    background-image: url("assets/images/succulent-plant-background-wallpaper-aesthetic-nature-dark-image.jpg");
+  }
+  .guide-card.vision {
+    background-image: url("assets/images/photo-wall-texture-pattern.jpg");
+  }
+  .guide-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(31,49,54,0.18) 0%, rgba(31,49,54,0.32) 100%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .guide-frosted {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    width: 100%;
+    padding: 36px 32px 112px;
+    border-radius: var(--radius-card);
+    background: rgba(31, 49, 54, 0.35);
+    backdrop-filter: blur(18px) saturate(1.15);
+    -webkit-backdrop-filter: blur(18px) saturate(1.15);
+    box-shadow: 0 10px 30px rgba(31, 49, 54, 0.16);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .guide-frosted::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(31, 49, 54, 0.45) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .guide-frosted > * { position: relative; z-index: 2; }
+  .guide-frosted h3 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 2.4vw, 30px);
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 28px;
+    letter-spacing: -0.005em;
+  }
+  .guide-body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 460px;
+  }
+  .guide-body p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.94);
+  }
+  .guide-body p.is-extra { display: none; }
+  .guide-card.is-expanded .guide-body p.is-extra { display: block; }
+  .guide-frosted .btn-light { margin-top: auto; padding-top: 10px; padding-bottom: 10px; }
+  .guide-frosted .btn-row { margin-top: auto; padding-top: 40px; display: flex; justify-content: center; }
+  .btn-light {
+    background: #D1DFDC;
+    color: var(--teal);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    padding: 10px 36px;
+    border-radius: var(--radius-btn);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s ease, transform 0.1s ease;
+  }
+  .btn-light:hover { background: #ffffff; }
+  .btn-light:active { transform: translateY(1px); }
+
+  /* ────────── STORY (Founder + toggle + bio) ────────── */
+  .story {
+    background: var(--cream);
+    padding: 80px 0 0;
+  }
+  .bio-section { display: flex; flex-direction: column; }
+  .founder-card {
+    position: relative;
+    border-radius: var(--radius-section);
+    overflow: hidden;
+    isolation: isolate;
+    min-height: 720px;
+    background-image: url("assets/images/Fouad - About Page Background UPDATED.jpg");
+    background-size: cover;
+    background-position: 18% top;
+  }
+  .founder-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    background: rgba(140, 96, 64, 0.15);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .founder-frosted {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    padding: 80px 72px;
+    border-radius: 0 var(--radius-section) var(--radius-section) 0;
+    background: rgba(140, 96, 64, 0.42);
+    backdrop-filter: blur(16px) saturate(1.15);
+    -webkit-backdrop-filter: blur(16px) saturate(1.15);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+  }
+  .founder-frosted::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(31, 49, 54, 0.45) 100%);
+    pointer-events: none;
+  }
+  .founder-frosted > * { position: relative; z-index: 2; }
+  .founder-frosted .eyebrow {
+    color: var(--blush);
+    margin-bottom: 14px;
+  }
+  .founder-h3 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 24px;
+    letter-spacing: -0.005em;
+  }
+  .founder-body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .founder-body p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .founder-body strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  /* Toggle bar */
+  .bio-toggle {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 22px 32px;
+    background: linear-gradient(to right, var(--teal), var(--green));
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-card);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: center;
+    position: relative;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .bio-toggle:hover { opacity: 0.92; }
+  .bio-toggle:focus-visible { outline: 2px solid var(--blush); outline-offset: 3px; }
+  .bio-toggle-icon {
+    position: absolute;
+    right: 21px;
+    top: 50%;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #D1DFDC;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bio-toggle-icon::before,
+  .bio-toggle-icon::after {
+    content: "";
+    position: absolute;
+    background: #1F3136;
+    border-radius: 1px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .bio-toggle-icon::before { width: 12px; height: 2px; }
+  .bio-toggle-icon::after { width: 2px; height: 12px; }
+  .bio-toggle[aria-expanded="true"] .bio-toggle-icon::after {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  .bio-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.55s ease, opacity 0.4s ease, margin-top 0.4s ease;
+    margin-top: 0;
+  }
+  .bio-content-inner {
+    background: #ffffff;
+    border-radius: var(--radius-section);
+    padding: 56px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .bio-content-inner p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--teal);
+  }
+  .bio-content-inner strong { font-weight: 600; }
+  .bio-toggle[aria-expanded="true"] + .bio-content {
+    max-height: 2400px;
+    opacity: 1;
+    margin-top: 9px;
+  }
+
+  /* ────────── INSTAGRAM ────────── */
+  .instagram {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 9px;
+    background: transparent;
+    width: 100%;
+  }
+  .instagram-tile {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    min-width: 0;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 250ms ease-in-out;
+  }
+  .instagram-tile::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .instagram-tile::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 28px; height: 28px;
+    background: #fff;
+    -webkit-mask: url("assets/images/Instagram Icon 28 x 28px.svg") no-repeat center / contain;
+            mask: url("assets/images/Instagram Icon 28 x 28px.svg") no-repeat center / contain;
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .instagram-tile:hover { transform: scale(1.03); }
+  .instagram-tile:hover::before,
+  .instagram-tile:hover::after { opacity: 1; }
+  .instagram-tile:nth-child(1) { background-image: url("assets/images/IMG_6427.JPG"); }
+  .instagram-tile:nth-child(2) { background-image: url("assets/images/AdobeStock_1598281600.jpeg"); }
+  .instagram-tile:nth-child(3) { background-image: url("assets/images/Sphinx.png"); }
+  .instagram-tile:nth-child(4) { background-image: url("assets/images/AdobeStock_355522063.jpeg"); }
+  .instagram-tile:nth-child(5) { background-image: url("assets/images/Deluxe Cabin.JPEG"); }
+  .instagram-tile:nth-child(6) { background-image: url("assets/images/AdobeStock_523369556.jpeg"); }
+
+  /* ────────── FOOTER ────────── */
+  .footer {
+    background: #FFFBFB;
+    padding: 90px 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+  }
+  .footer-logo {
+    width: 220px; height: 240px;
+    background: url("assets/images/The Modern Ashram Logo FOOTER.svg") center / contain no-repeat;
+  }
+  .footer-instagram {
+    width: 28px; height: 28px;
+    text-decoration: none;
+    display: inline-flex;
+    transition: opacity 0.2s;
+  }
+  .footer-instagram:hover { opacity: 0.7; }
+  .footer-instagram img { width: 28px; height: 28px; display: block; }
+  .footer-nav {
+    display: flex; align-items: center; gap: 64px;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .footer-nav a {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--c-deep-teal);
+    text-decoration: none;
+    line-height: 1.5;
+    transition: opacity 0.2s;
+  }
+  .footer-nav a:hover { opacity: 0.6; }
+  .footer-divider {
+    width: 100%;
+    max-width: 100%;
+    height: 1px;
+    background: rgba(31, 49, 54, 0.4);
+    margin: 16px 0 0;
+  }
+  .footer-legal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 16px;
+  }
+  .footer-legal-left {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: #1f3136;
+  }
+  .footer-legal-right { display: flex; gap: 40px; flex-wrap: wrap; }
+  .footer-legal-right a {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: #1f3136;
+    text-decoration: none;
+  }
+  .footer-legal-right a:hover { opacity: 0.7; }
+
+  /* ────────── RESPONSIVE ────────── */
+  @media (max-width: 1024px) {
+    .intro { padding: 64px 40px 52px; }
+    .guides { padding: 60px 0 0; }
+    .story { padding: 60px 0 0; }
+    .guides-grid { grid-template-columns: 1fr; }
+    .guide-card { min-height: 540px; padding: 28px; }
+    .guide-frosted { padding: 44px 32px 36px; }
+    .founder-card {
+      min-height: 760px;
+      background-position: 30% top;
+    }
+    .founder-card::before {
+      top: 50%;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+    .founder-frosted {
+      top: auto;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      padding: 40px 32px;
+      border-radius: 0 0 var(--radius-section) var(--radius-section);
+    }
+    .founder-frosted::before {
+      top: 0;
+      bottom: auto;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0%, rgba(31, 49, 54, 0.45) 100%);
+    }
+  }
+  @media (max-width: 767px) {
+    body { padding: 9px; }
+
+    .eyebrow { font-size: 17px; }
+
+    .intro { padding: 88px 24px 36px; }
+    .intro h1 { font-size: 36px; }
+    .intro-body { font-size: 15px; }
+    .pillars-img-wrap { padding: 36px 0 0; }
+    .pillars-img { max-width: 100%; }
+
+    .guides { padding: 40px 0 0; }
+    .section-heading { margin-bottom: 32px; font-size: 32px; }
+    .guide-card { min-height: 480px; padding: 18px; }
+    .guide-frosted { padding: 36px 24px 48px; }
+
+    .story { padding: 40px 0 0; }
+    .founder-card {
+      min-height: 0;
+      height: auto;
+      aspect-ratio: 800 / 2717;
+      background-position: center top;
+      background-image: url("assets/images/Fouad - About Page Background MOBILE V3.jpg");
+    }
+    .founder-card::before {
+      top: 0;
+      bottom: 50%;
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
+    .founder-frosted {
+      top: 0;
+      bottom: auto;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: auto;
+      padding: 32px 24px 118px;
+      border-radius: var(--radius-section) var(--radius-section) 0 0;
+    }
+    .founder-frosted::before {
+      top: auto;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0%, rgba(31, 49, 54, 0.45) 100%);
+    }
+    .founder-h3 { font-size: 26px; }
+    .bio-toggle { padding: 18px 48px 18px 24px; font-size: 15px; }
+    .bio-toggle-icon { right: 16px; width: 22px; height: 22px; }
+    .bio-toggle-icon::before { width: 9px; height: 2px; }
+    .bio-toggle-icon::after { width: 2px; height: 9px; }
+    .bio-content-inner { padding: 36px 24px; }
+
+    .instagram { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+
+    .footer { padding: 60px 24px 30px; gap: 22px; }
+    .footer-logo { width: 130px; height: 142px; }
+    .footer-nav { gap: 32px; flex-direction: column; }
+    .footer-legal { flex-direction: column; gap: 12px; padding-top: 12px; }
+    .footer-legal-right { flex-direction: column; gap: 12px; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV (canonical — keep in sync across all pages) ───────────────── -->
+<nav class="nav" aria-label="Primary" data-screen-label="Nav">
+  <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="nav-menu">
+    <a href="home.html">Home</a>
+    <div class="nav-dropdown">
+      <a href="journeys.html" class="has-caret">Journeys</a>
+      <div class="nav-dropdown-menu">
+        <a href="the-eternal-nile.html">The Eternal Nile</a>
+        <a href="ancient-egyptian-odyssey.html">Ancient Egyptian Odyssey</a>
+      </div>
+    </div>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <a href="home.html" class="nav-logo" aria-label="The Modern Ashram"></a>
+  <a href="contact.html" class="nav-cta">Enquire Now</a>
+</nav>
+
+<!-- ── INTRO / Three pillars ───────────────────────── -->
+<section class="panel intro" data-screen-label="Three pillars">
+  <div class="intro-inner">
+    <div class="intro-text">
+      <h1 class="h1">The three pillars<br>of transformation</h1>
+      <p class="intro-body">The Modern Ashram is built on three foundations: <strong>skilled facilitation</strong>, <strong>cultural immersion</strong>, and <strong>spiritual practice</strong>. Our journeys are held within safe, intentional spaces — rooted in the <strong>wisdom</strong> of place and <strong>culture</strong>, and anchored by <strong>ancient practices</strong> thoughtfully adapted for <strong>modern life</strong>. Together, these three pillars create experiences that <strong>catalyze</strong> deep healing, <strong>embodied presence</strong>, and lasting <strong>inner expansion</strong>.</p>
+    </div>
+    <div class="pillars-img-wrap">
+      <img src="assets/images/Three Pillars of Transformation Infographic.png" alt="The three pillars of transformation: skilled facilitation, cultural immersion, spiritual practice" class="pillars-img">
+    </div>
+  </div>
+</section>
+
+<!-- ── WHAT GUIDES US ──────────────────────────────── -->
+<section class="panel guides" data-screen-label="What guides us">
+  <h2 class="h2 section-heading">What guides us</h2>
+  <div class="guides-grid">
+    <article class="guide-card mission">
+      <div class="guide-frosted">
+        <h3>Our Mission</h3>
+        <div class="guide-body">
+          <p>At The Modern Ashram, we exist to bring ancient wisdom back into modern life —</p>
+          <p>We live in a world that moves too fast, demands much, and often pulls us far from who we truly are. Somewhere along the way, many of us lose the plot — to our bodies, our truth, our sense of inner peace. Our mission is to help you find it again.</p>
+          <p>Our work is rooted in a simple truth: healing is your natural state. Through sacred journeys, natural medicine, and ancient practices, we create the conditions for you to return to yourself — to your wholeness, your clarity, and your own inner knowing&hellip;</p>
+          <p class="is-extra">We do this in one of the most energetically potent places on earth: Ancient Egypt. A civilization whose mysteries, symbols, and sacred sites have called to the human soul for thousands of years. There is something about this land that strips away the noise and brings you back to remembering.</p>
+          <p class="is-extra">We stand to bridge ancient wisdom to modern society.</p>
+        </div>
+        <div class="btn-row"><a href="#" class="btn-light js-read-more" data-target="mission">Read More</a></div>
+      </div>
+    </article>
+    <article class="guide-card vision">
+      <div class="guide-frosted">
+        <h3>Our Vision</h3>
+        <div class="guide-body">
+          <p>Our vision is to maintain an authentic, ethical space for self-exploration and healing, and to provide greater ease and comfort for participants — so they can carry more peace, wisdom, and sustainability back into the world.</p>
+          <p>We aim to keep our experiences rich in cultural history, knowledge, and healing, while continuously expanding into new destinations and dimensions of this work. Since 2022, we have guided seven sacred journeys — and we are just beginning.</p>
+          <p>The Modern Ashram represents the frequency of wholeness, completion, and expansion&hellip;</p>
+          <p class="is-extra">We believe we can weave together a global community united by a shared understanding of how to co-create a new reality and consciousness for thriving in today's world.</p>
+          <p class="is-extra">While Egypt remains the heart of our work, our vision extends to the many other sacred geographies the world still holds. Future journeys will reach into the world's most potent sites — places that have called to seekers for millennia — each chosen for its cultural depth, its energetic resonance, and its capacity to facilitate the same return to wholeness our work has always pointed toward.</p>
+        </div>
+        <div class="btn-row"><a href="#" class="btn-light js-read-more" data-target="vision">Read More</a></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── OUR STORY (heading + founder card) ──────────── -->
+<section class="panel story" data-screen-label="Our story">
+  <h2 class="h2 section-heading">Our story</h2>
+  <article class="founder-card" role="img" aria-label="Fouad, founder of The Modern Ashram">
+    <div class="founder-frosted">
+      <span class="eyebrow">Our founder Fouad's story</span>
+      <h3 class="founder-h3">The Modern Ashram's<br>journey of evolution</h3>
+      <div class="founder-body">
+        <p><strong>The Modern Ashram</strong> began in my apartment in Barcelona in 2019. After feeling swept up by the pace of the corporate world and the expectations of modern society, I felt a deep calling to create spaces that brought people together in a <strong>more conscious, intentional way</strong>.</p>
+        <p>Drawing from my passion for <strong>ancient plant and earth medicines</strong>, <strong>healing modalities</strong>, and <strong>spiritual practices</strong>, I wanted to simplify access to these tools for the modern individual.</p>
+        <p>From this vision, <strong>The Modern Ashram</strong> was born — a bridge between contemporary life and sacred work, connecting modern individuals to <strong>ancient wisdom</strong>, <strong>intentional containers</strong>, and <strong>powerful locations</strong> around the world.</p>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ── BIO TOGGLE + EXPANDABLE BIO ─────────────────── -->
+<div class="bio-section">
+  <button class="bio-toggle" type="button" aria-expanded="false" aria-controls="fouad-bio">
+    <span>Read Fouad's full bio here</span>
+    <span class="bio-toggle-icon" aria-hidden="true"></span>
+  </button>
+
+  <div id="fouad-bio" class="bio-content" role="region" aria-label="Fouad's full bio">
+    <div class="bio-content-inner">
+      <p>Born and raised in Cairo, Egypt, Fouad is a former corporate sales executive turned certified healer, with expertise in <strong>Energy Medicine</strong>, <strong>Breathwork</strong>, <strong>Meditation</strong>, and <strong>toad medicine facilitation</strong>. His spiritual journey began during his corporate career, following a period of deep depression that led him to seek answers beyond conventional approaches. Rather than pursuing traditional treatments, Fouad turned inward, immersing himself in meditation, the practice of stillness, and holistic living under the guidance of Eastern teachers.</p>
+      <p>In 2016, his growing curiosity about alternative healing modalities led him to a transformative plant medicine journey in Peru, where he experienced profound shifts that realigned him with his deeper purpose. This pivotal experience inspired him to further his studies in holistic practices and energy work, complemented by immersive training in toad medicine in Spain and Mexico.</p>
+      <p>Over the past six years, he has supported over a thousand individuals from around the world. He is the founder of The Modern Ashram, through which he continues to curate and co-create intentional healing spaces — currently focused in Egypt — designed to support transformation, self-discovery, and expanded awareness.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── INSTAGRAM ───────────────────────────────────── -->
+<section class="instagram-feed" data-screen-label="Instagram">
+  <script src="https://elfsightcdn.com/platform.js" async></script>
+  <div class="elfsight-app-26f3251d-0988-40a5-a153-fbbe3986d1cd" data-elfsight-app-lazy></div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────── -->
+<footer class="footer panel" data-screen-label="Footer">
+  <div class="footer-logo" aria-hidden="true"></div>
+
+  <a href="https://www.instagram.com/themodernashram/" class="footer-instagram" aria-label="Instagram" target="_blank" rel="noopener">
+    <img src="assets/images/Instagram Icon 28 x 28px DARK GREEN.svg" alt="" width="28" height="28">
+  </a>
+
+  <nav class="footer-nav" aria-label="Footer">
+    <a href="home.html">Home</a>
+    <a href="journeys.html">Journeys</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <div class="footer-divider" aria-hidden="true"></div>
+
+  <div class="footer-legal">
+    <p class="footer-legal-left">© 2026 The Modern Ashram</p>
+    <div class="footer-legal-right">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-of-use.html">Terms of Use</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    const btn = document.querySelector('.bio-toggle');
+    const panel = document.getElementById('fouad-bio');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+    });
+  })();
+
+  /* canonical nav hamburger toggle — keep in sync across all pages */
+  (function () {
+    const burger = document.querySelector('.nav-burger');
+    const navLinks = document.querySelector('.nav-links');
+    const nav = document.querySelector('.nav');
+    if (!burger || !navLinks || !nav) return;
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const expanded = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!expanded));
+    });
+    navLinks.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') burger.setAttribute('aria-expanded', 'false');
+    });
+    document.addEventListener('click', function (e) {
+      if (!nav.contains(e.target)) burger.setAttribute('aria-expanded', 'false');
+    });
+  })();
+
+  (function () {
+    document.querySelectorAll('.js-read-more').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var card = btn.closest('.guide-card');
+        if (!card) return;
+        var open = card.classList.toggle('is-expanded');
+        btn.textContent = open ? 'Read Less' : 'Read More';
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
