@@ -1,0 +1,17 @@
+# macOS artifacts
+.DS_Store
+Icon?
+
+# Editor / workspace files
+*.code-workspace
+.vscode/
+
+# Project documentation & internal notes (not deployed)
+CLAUDE.md
+Header-Footer Nav.md
+design-system.md
+Notes & Content From Fouad/
+Notes for Fouad/
+Task List/
+Troubleshooting Screenshots/
+design-references/
