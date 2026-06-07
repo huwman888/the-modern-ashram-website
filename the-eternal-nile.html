@@ -534,8 +534,11 @@
     .timeline::before { display:none; }
   }
   @media (max-width: 1024px) {
-    .facilitators { padding:96px 40px; }
-    .facilitators-grid { grid-template-columns:1fr; gap:56px; margin-bottom:48px; max-width:480px; margin-left:auto; margin-right:auto; }
+    .facilitators { padding:96px 32px; }
+    .facilitators-grid { gap:32px; margin-bottom:56px; }
+    .facilitator-photo { width:200px; height:200px; margin-bottom:24px; }
+    .facilitator-bio, .facilitator--wide .facilitator-bio { max-width:100%; font-size:14px; }
+    .facilitator-name { font-size:19px; margin-bottom:14px; }
   }
   @media (max-width: 900px) {
     body { padding:9px; }
