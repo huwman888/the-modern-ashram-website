@@ -534,6 +534,10 @@
     .stop.left .stop-content .loc-eyebrow::before { content:""; display:inline-block; width:24px; height:1px; background:var(--blush); }
     .timeline::before { display:none; }
   }
+  @media (max-width: 1024px) {
+    .facilitators { padding:96px 40px; }
+    .facilitators-grid { grid-template-columns:1fr; gap:56px; margin-bottom:48px; max-width:480px; margin-left:auto; margin-right:auto; }
+  }
   @media (max-width: 900px) {
     body { padding:9px; }
     .hero-inner, .invitation, .foundations, .accom, .itinerary, .balloon, .inclusions, .pricing, .final-cta, .facilitators { padding:72px 24px !important; }
