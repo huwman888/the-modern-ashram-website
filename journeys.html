@@ -611,19 +611,19 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="nav-menu">
-      <a href="index.html">Home</a>
+      <a href="/">Home</a>
       <div class="nav-dropdown">
-        <a href="journeys.html" class="has-caret">Journeys</a>
+        <a href="journeys" class="has-caret">Journeys</a>
         <div class="nav-dropdown-menu">
-          <a href="the-eternal-nile.html">The Eternal Nile</a>
-          <a href="ancient-egyptian-odyssey.html">Ancient Egyptian Odyssey</a>
+          <a href="the-eternal-nile">The Eternal Nile</a>
+          <a href="ancient-egyptian-odyssey">Ancient Egyptian Odyssey</a>
         </div>
       </div>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="about">About</a>
+      <a href="contact">Contact</a>
     </div>
-    <a href="index.html" class="nav-logo" aria-label="The Modern Ashram"></a>
-    <a href="contact.html" class="nav-cta">Enquire Now</a>
+    <a href="/" class="nav-logo" aria-label="The Modern Ashram"></a>
+    <a href="contact" class="nav-cta">Enquire Now</a>
   </nav>
 
   <!-- SECTION 1 — PAGE HEADING -->
@@ -641,7 +641,7 @@
           <h2 class="card-title">The Eternal Nile</h2>
           <p class="card-date">5 - 15 October, 2026</p>
           <p class="card-descriptor">Join us for our next sacred journey<br><span style="font-weight: 600; white-space: nowrap;">The Eternal Nile</span>.</p>
-          <a href="the-eternal-nile.html" class="btn btn-primary">Find Out More</a>
+          <a href="the-eternal-nile" class="btn btn-primary">Find Out More</a>
         </div>
       </article>
 
@@ -651,7 +651,7 @@
           <h2 class="card-title">Ancient Egyptian Odyssey</h2>
           <p class="card-date">October 25 - November 3, 2026</p>
           <p class="card-descriptor">Join us for our seventh edition <span style="font-weight: 600; white-space: nowrap;">Ancient Egyptian Odyssey</span>.</p>
-          <a href="ancient-egyptian-odyssey.html" class="btn btn-primary">Find Out More</a>
+          <a href="ancient-egyptian-odyssey" class="btn btn-primary">Find Out More</a>
         </div>
       </article>
 
@@ -705,7 +705,7 @@
       <p class="cta-eyebrow">Bespoke journeys tailored just for you</p>
       <h2 class="cta-headline">Are you ready for a major shift?</h2>
       <p class="cta-body">A curated immersion into <strong>sacred sites</strong>, <strong>ancient wisdom</strong>, and <strong>conscious exploration</strong> — where <strong>transformation</strong> becomes lived experience.</p>
-      <a href="contact.html" class="btn btn-light">Enquire Now</a>
+      <a href="contact" class="btn btn-light">Enquire Now</a>
     </div>
   </section>
 
@@ -724,10 +724,10 @@
     </a>
 
     <nav class="footer-nav" aria-label="Footer">
-      <a href="index.html">Home</a>
-      <a href="journeys.html">Journeys</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="/">Home</a>
+      <a href="journeys">Journeys</a>
+      <a href="about">About</a>
+      <a href="contact">Contact</a>
     </nav>
 
     <div class="footer-divider" aria-hidden="true"></div>
@@ -735,8 +735,8 @@
     <div class="footer-legal">
       <p class="footer-legal-left">© 2026 The Modern Ashram</p>
       <div class="footer-legal-right">
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="terms-of-use.html">Terms of Use</a>
+        <a href="privacy-policy">Privacy Policy</a>
+        <a href="terms-of-use">Terms of Use</a>
       </div>
     </div>
   </footer>
@@ -765,12 +765,12 @@
 </script>
 
 <script>
-  /* MailChimp signup handler — posts via JSONP, then redirects to signup-success.html */
+  /* MailChimp signup handler — posts via JSONP, then redirects to signup-success */
   (function () {
     var forms = document.querySelectorAll('form.mc-signup');
     if (!forms.length) return;
     var redirected = false;
-    function go() { if (redirected) return; redirected = true; window.location.href = 'signup-success.html'; }
+    function go() { if (redirected) return; redirected = true; window.location.href = 'signup-success'; }
     window.mcSignupCallback = go;
     forms.forEach(function (form) {
       form.addEventListener('submit', function (e) {

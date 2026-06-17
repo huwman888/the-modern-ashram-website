@@ -664,19 +664,19 @@
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="nav-menu">
-    <a href="index.html">Home</a>
+    <a href="/">Home</a>
     <div class="nav-dropdown">
-      <a href="journeys.html" class="has-caret">Journeys</a>
+      <a href="journeys" class="has-caret">Journeys</a>
       <div class="nav-dropdown-menu">
-        <a href="the-eternal-nile.html">The Eternal Nile</a>
-        <a href="ancient-egyptian-odyssey.html">Ancient Egyptian Odyssey</a>
+        <a href="the-eternal-nile">The Eternal Nile</a>
+        <a href="ancient-egyptian-odyssey">Ancient Egyptian Odyssey</a>
       </div>
     </div>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
+    <a href="about">About</a>
+    <a href="contact">Contact</a>
   </div>
-  <a href="index.html" class="nav-logo" aria-label="The Modern Ashram"></a>
-  <a href="contact.html" class="nav-cta">Enquire Now</a>
+  <a href="/" class="nav-logo" aria-label="The Modern Ashram"></a>
+  <a href="contact" class="nav-cta">Enquire Now</a>
 </nav>
 
 <!-- ── CONTACT HEADING ───────────────────────────────── -->
@@ -720,7 +720,7 @@
       <input type="hidden" name="access_key" value="105891cb-16f3-4fd7-b4f0-9e0eeaf98f03">
       <input type="hidden" name="subject" value="New contact form enquiry – The Modern Ashram">
       <input type="hidden" name="from_name" value="The Modern Ashram website">
-      <input type="hidden" name="redirect" value="https://themodernashram.com/contact-success.html">
+      <input type="hidden" name="redirect" value="https://themodernashram.com/contact-success">
       <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
       <div class="form-row">
         <div class="form-field">
@@ -828,10 +828,10 @@
   </a>
 
   <nav class="footer-nav" aria-label="Footer">
-    <a href="index.html">Home</a>
-    <a href="journeys.html">Journeys</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
+    <a href="/">Home</a>
+    <a href="journeys">Journeys</a>
+    <a href="about">About</a>
+    <a href="contact">Contact</a>
   </nav>
 
   <div class="footer-divider" aria-hidden="true"></div>
@@ -839,8 +839,8 @@
   <div class="footer-legal">
     <p class="footer-legal-left">© 2026 The Modern Ashram</p>
     <div class="footer-legal-right">
-      <a href="privacy-policy.html">Privacy Policy</a>
-      <a href="terms-of-use.html">Terms of Use</a>
+      <a href="privacy-policy">Privacy Policy</a>
+      <a href="terms-of-use">Terms of Use</a>
     </div>
   </div>
 </footer>
@@ -867,12 +867,12 @@
 </script>
 
 <script>
-  /* MailChimp signup handler — posts via JSONP, then redirects to signup-success.html */
+  /* MailChimp signup handler — posts via JSONP, then redirects to signup-success */
   (function () {
     var forms = document.querySelectorAll('form.mc-signup');
     if (!forms.length) return;
     var redirected = false;
-    function go() { if (redirected) return; redirected = true; window.location.href = 'signup-success.html'; }
+    function go() { if (redirected) return; redirected = true; window.location.href = 'signup-success'; }
     window.mcSignupCallback = go;
     forms.forEach(function (form) {
       form.addEventListener('submit', function (e) {

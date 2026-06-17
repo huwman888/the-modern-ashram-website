@@ -946,19 +946,19 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="nav-menu">
-      <a href="index.html">Home</a>
+      <a href="/">Home</a>
       <div class="nav-dropdown">
-        <a href="journeys.html" class="has-caret">Journeys</a>
+        <a href="journeys" class="has-caret">Journeys</a>
         <div class="nav-dropdown-menu">
-          <a href="the-eternal-nile.html">The Eternal Nile</a>
-          <a href="ancient-egyptian-odyssey.html">Ancient Egyptian Odyssey</a>
+          <a href="the-eternal-nile">The Eternal Nile</a>
+          <a href="ancient-egyptian-odyssey">Ancient Egyptian Odyssey</a>
         </div>
       </div>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="about">About</a>
+      <a href="contact">Contact</a>
     </div>
-    <a href="index.html" class="nav-logo" aria-label="The Modern Ashram"></a>
-    <a href="contact.html" class="nav-cta">Enquire Now</a>
+    <a href="/" class="nav-logo" aria-label="The Modern Ashram"></a>
+    <a href="contact" class="nav-cta">Enquire Now</a>
   </nav>
 
   <!-- ── HERO ─────────────────────────────────────────── -->
@@ -968,7 +968,7 @@
       <h1 class="hero-title">Transformational<br>Sacred Journeys</h1>
       <p class="hero-subtitle">Bridging ancient wisdom to the modern world</p>
       <div class="hero-actions">
-        <a href="contact.html" class="btn btn-light">Enquire Now</a>
+        <a href="contact" class="btn btn-light">Enquire Now</a>
       </div>
     </div>
 
@@ -981,7 +981,7 @@
     <h2 class="intro-heading">The Modern Ashram</h2>
     <p class="intro-body"><strong>A bridge where ancient wisdom meets modern transformation.</strong></p>
     <p class="intro-body">We guide those called to go deeper through <strong>immersive journeys</strong> — across sacred lands, <strong>ancient sites</strong>, and the depth of their own <strong>inner world</strong> — creating safe, <strong>intentional spaces</strong> to heal, expand, and <strong>return</strong> to themselves.</p>
-    <a href="about.html" class="btn btn-primary">Find Out More</a>
+    <a href="about" class="btn btn-primary">Find Out More</a>
     <!-- removed-divider --></section>
 
   <!-- ── NEXT JOURNEY CAROUSEL ──────────────────────── -->
@@ -993,7 +993,7 @@
         <p class="event-title">The Eternal Nile</p>
         <p class="event-date">5 - 15 October, 2026</p>
         <p class="event-desc">A ten-day journey into Egypt's sacred heart, where comfort meets the profound work of transformation.</p>
-        <a href="the-eternal-nile.html" class="btn btn-light">Find Out More</a>
+        <a href="the-eternal-nile" class="btn btn-light">Find Out More</a>
       </div>
     </div>
     <div class="event-slide" style="background-image: linear-gradient(rgba(31,49,54,0.55), rgba(31,49,54,0.55)), url('assets/images/IMG_6447.JPG');">
@@ -1002,7 +1002,7 @@
         <p class="event-title">Ancient Egyptian Odyssey</p>
         <p class="event-date">25 October – 3 November, 2026</p>
         <p class="event-desc">A ten-day journey into Egypt's sacred heart, where comfort meets the profound work of transformation.</p>
-        <a href="ancient-egyptian-odyssey.html" class="btn btn-light">Find Out More</a>
+        <a href="ancient-egyptian-odyssey" class="btn btn-light">Find Out More</a>
       </div>
     </div>
     <button class="arrow-btn next" aria-label="Next journey"></button>
@@ -1055,7 +1055,7 @@ of future journeys</h2>
       <p class="feature-eyebrow">Bespoke journeys tailored just for&nbsp;you</p>
       <h2 class="feature-title">Are you ready to step into a deeper journey?</h2>
       <p class="feature-body">A curated immersion into <strong>sacred sites</strong>, <strong>ancient wisdom</strong>, and <strong>conscious exploration</strong> — where <strong>transformation</strong> becomes lived experience.</p>
-      <a href="contact.html" class="btn btn-light">Enquire Now</a>
+      <a href="contact" class="btn btn-light">Enquire Now</a>
     </div>
   </section>
 
@@ -1160,10 +1160,10 @@ of future journeys</h2>
     </a>
 
     <nav class="footer-nav" aria-label="Footer">
-      <a href="index.html">Home</a>
-      <a href="journeys.html">Journeys</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="/">Home</a>
+      <a href="journeys">Journeys</a>
+      <a href="about">About</a>
+      <a href="contact">Contact</a>
     </nav>
 
     <div class="footer-divider" aria-hidden="true"></div>
@@ -1171,19 +1171,19 @@ of future journeys</h2>
     <div class="footer-legal">
       <p class="footer-legal-left">© 2026 The Modern Ashram</p>
       <div class="footer-legal-right">
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="terms-of-use.html">Terms of Use</a>
+        <a href="privacy-policy">Privacy Policy</a>
+        <a href="terms-of-use">Terms of Use</a>
       </div>
     </div>
   </footer>
 
 <script>
-  /* MailChimp signup handler — posts via JSONP, then redirects to signup-success.html */
+  /* MailChimp signup handler — posts via JSONP, then redirects to signup-success */
   (function () {
     var forms = document.querySelectorAll('form.mc-signup');
     if (!forms.length) return;
     var redirected = false;
-    function go() { if (redirected) return; redirected = true; window.location.href = 'signup-success.html'; }
+    function go() { if (redirected) return; redirected = true; window.location.href = 'signup-success'; }
     window.mcSignupCallback = go;
     forms.forEach(function (form) {
       form.addEventListener('submit', function (e) {
