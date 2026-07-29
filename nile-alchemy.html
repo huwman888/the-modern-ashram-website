@@ -563,8 +563,8 @@
     .eyebrow { font-size: 17px; }
     .brk-sm { display: initial; }
     .pricing[style] { padding:72px 24px !important; }
-    .pricing div[style*="grid-template-columns:repeat(2"] { grid-template-columns:1fr !important; }
-    .pricing div[style*="padding:40px 36px"] { padding:32px 24px !important; }
+    .pricing div[style*="grid-template-columns:repeat(2"] { grid-template-columns:1fr !important; gap:16px !important; }
+    .pricing div[style*="aspect-ratio:16/6"] { aspect-ratio:16/10 !important; }
     .h1 { white-space: normal !important; font-size: 36px !important; }
     .hero-meta {
       flex-direction: column;
@@ -613,7 +613,7 @@
       <span><span class="dot"></span>Egypt</span>
       <span><span class="dot"></span>9 Days</span>
       <span><span class="dot"></span>15 – 23 November 2026</span>
-      <span><span class="dot"></span>Limited Cabins</span>
+      <span><span class="dot"></span>12 Guests</span>
     </div>
     <h1 class="h1" style="white-space:nowrap;">The Nile Alchemy</h1>
     <p class="tagline">"A journey through the Temples of Egypt<br class="brk-sm"> and the Temple within."</p>
@@ -745,11 +745,15 @@
           </ul>
         </div>
         <div class="stop-marker"><div class="dot"></div><div class="day">20 Nov</div></div>
-        <div class="stop-img" style="background-image:url('assets/images/Nile Sunrise Meditation.png');"></div>
+        <div class="stop-img" style="background:var(--sage); position:relative;">
+          <span style="position:absolute; top:12px; left:12px; background:rgba(31,49,54,0.75); color:#fff; font-size:11px; padding:4px 10px; border-radius:4px; letter-spacing:0.05em;">IMAGE PENDING</span>
+        </div>
       </div>
 
       <div class="stop right">
-        <div class="stop-img" style="background-image:url('assets/images/The Integration.png');"></div>
+        <div class="stop-img" style="background:var(--sage); position:relative;">
+          <span style="position:absolute; top:12px; left:12px; background:rgba(31,49,54,0.75); color:#fff; font-size:11px; padding:4px 10px; border-radius:4px; letter-spacing:0.05em;">IMAGE PENDING</span>
+        </div>
         <div class="stop-marker"><div class="dot"></div><div class="day">21 Nov</div></div>
         <div class="stop-content">
           <div class="loc-eyebrow">Phase 3 · Landing</div>
@@ -766,7 +770,7 @@
         <div class="stop-content">
           <div class="loc-eyebrow">Phase 3 · The Living Temple</div>
           <h3>Valley of the Kings &amp; Closing Ceremony</h3>
-          <p>Before sunrise, guests can take a hot air balloon flight over Luxor. We visit the Valley of the Kings and the Valley of the Queens. In the evening, we gather for our closing dinner and closing ceremony.</p>
+          <p>We visit the Valley of the Kings and the Valley of the Queens. In the evening, we gather for our closing dinner and closing ceremony.</p>
           <div class="visiting-label">Practices</div>
           <ul class="visiting">
             <li>Integration session</li>
@@ -774,11 +778,15 @@
           </ul>
         </div>
         <div class="stop-marker"><div class="dot"></div><div class="day">22 Nov</div></div>
-        <div class="stop-img" style="background-image:url('assets/images/hot air ballon for eternal nile.jpg');"></div>
+        <div class="stop-img" style="background:var(--sage); position:relative;">
+          <span style="position:absolute; top:12px; left:12px; background:rgba(31,49,54,0.75); color:#fff; font-size:11px; padding:4px 10px; border-radius:4px; letter-spacing:0.05em;">IMAGE PENDING</span>
+        </div>
       </div>
 
       <div class="stop right">
-        <div class="stop-img" style="background-image:url('assets/images/The Nile.png');"></div>
+        <div class="stop-img" style="background:var(--sage); position:relative;">
+          <span style="position:absolute; top:12px; left:12px; background:rgba(31,49,54,0.75); color:#fff; font-size:11px; padding:4px 10px; border-radius:4px; letter-spacing:0.05em;">IMAGE PENDING</span>
+        </div>
         <div class="stop-marker"><div class="dot"></div><div class="day">23 Nov</div></div>
         <div class="stop-content">
           <div class="loc-eyebrow">Departure Day</div>
@@ -829,15 +837,6 @@
   </div>
 </section>
 
-<!-- BALLOON -->
-<section class="panel balloon">
-  <div class="balloon-inner">
-    <div class="eyebrow">Optional Experience</div>
-    <h2 class="h2">Sunrise Hot Air Balloon over Luxor</h2>
-    <p>Before dawn on our final morning, guests can float above Luxor's West Bank as first light spills across the Nile valley. Silent skies, colossal temples far below, the desert turning to gold — an optional way to greet the closing day of the pilgrimage.</p>
-  </div>
-</section>
-
 <!-- INCLUSIONS -->
 <section class="panel inclusions" style="background:var(--cream);">
   <div class="inclusions-inner">
@@ -855,7 +854,7 @@
           <h4>Nine nights, three properties</h4>
           <ul>
             <li>2 nights at Fairmont Cairo</li>
-            <li>5 nights aboard a private luxury Dahabiya</li>
+            <li>4 nights aboard a private luxury Dahabiya</li>
             <li>2 nights at Steigenberger Luxor (Nile View)</li>
           </ul>
         </div>
@@ -917,17 +916,6 @@
         </div>
       </div>
 
-      <div class="incl-card">
-        <div class="top-img" style="background-image:url('assets/images/hot air ballon for eternal nile.jpg');"></div>
-        <div class="body">
-          <div class="cat">Optional Experience</div>
-          <h4>Sunrise over Luxor</h4>
-          <ul>
-            <li>Sunrise Hot Air Balloon over Luxor (optional add-on)</li>
-          </ul>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -935,47 +923,48 @@
 <!-- INVESTMENT / PRICING -->
 <section class="panel pricing" style="background:var(--cream); padding:120px 72px;">
   <div style="max-width:1120px; margin:0 auto;">
-    <div style="text-align:center; margin-bottom:56px;">
-      <div class="eyebrow light-bg" style="color:var(--green); margin-bottom:18px;">Investment</div>
-      <h2 class="h2" style="color:var(--teal); margin-bottom:20px;">Reserve your place</h2>
-      <p class="body-lg" style="color:var(--teal); max-width:640px; margin:0 auto;">A deposit secures your place, with payment plans available. With only a limited number of cabins aboard our private Dahabiya, places are intentionally limited to create an intimate and transformational group experience.</p>
+    <div style="text-align:center; margin-bottom:32px;">
+      <div class="eyebrow light-bg" style="color:var(--green); margin-bottom:14px;">Investment</div>
+      <p style="color:var(--mauve); font-style:italic; font-size:16px;">A deposit secures your place, with payment plans available.</p>
     </div>
 
-    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:32px; margin-bottom:32px;">
+    <!-- Investment CTA banner -->
+    <div style="position:relative; border-radius:16px; overflow:hidden; margin-bottom:32px; aspect-ratio:16/6;">
+      <img src="assets/images/Investment CTA.jpg" alt="Investment CTA" style="width:100%; height:100%; object-fit:cover; display:block;" />
+      <div style="position:absolute; inset:0; background:linear-gradient(rgba(31,49,54,0.35), rgba(31,49,54,0.55)); display:flex; align-items:center; justify-content:center; padding:32px;">
+        <p style="color:#fff; text-align:center; font-size:17px; line-height:1.6; max-width:640px;">With only a limited number of cabins aboard our private Dahabiya, places are intentionally limited to create an intimate and transformational group experience.</p>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:32px;">
       <!-- Early Bird -->
-      <div style="background:#fff; border-radius:16px; padding:40px 36px; border:1px solid rgba(31,49,54,0.08);">
-        <div style="display:inline-block; background:var(--blush); color:var(--teal); font-size:12px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:5px 12px; border-radius:4px; margin-bottom:20px;">Early Bird · Until 31 July 2026</div>
-        <h3 class="h3" style="color:var(--teal); margin-bottom:24px;">Early Bird Pricing</h3>
-        <div style="display:flex; flex-direction:column; gap:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:14px; border-bottom:1px solid rgba(31,49,54,0.08);">
-            <div style="color:var(--teal);">Shared Twin Cabin</div>
-            <div style="font-family:'Gloock',serif; font-size:26px; color:var(--green);">£4,995 <span style="font-family:'Work Sans',sans-serif; font-size:13px; color:var(--mauve);">/ person</span></div>
-          </div>
-          <div style="display:flex; justify-content:space-between; align-items:baseline;">
-            <div style="color:var(--teal);">Private Cabin (Single Occupancy)</div>
-            <div style="font-family:'Gloock',serif; font-size:26px; color:var(--green);">£8,295 <span style="font-family:'Work Sans',sans-serif; font-size:13px; color:var(--mauve);">/ person</span></div>
-          </div>
+      <div style="position:relative; border-radius:16px; overflow:hidden; min-height:320px; display:flex; flex-direction:column; justify-content:flex-end;">
+        <img src="assets/images/Early Bird Pricing.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;" />
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(31,49,54,0.15) 0%, rgba(31,49,54,0.75) 70%); z-index:1;"></div>
+        <div style="position:relative; z-index:2; padding:36px 32px; color:#fff;">
+          <h3 style="font-family:'Gloock',serif; font-size:28px; font-weight:400; margin-bottom:6px;">Early Bird Pricing</h3>
+          <p style="font-style:italic; font-size:13px; color:var(--blush); margin-bottom:20px;">(Available until 31 July 2026)</p>
+          <ul style="list-style:disc; padding-left:20px; display:flex; flex-direction:column; gap:8px; font-size:15px; line-height:1.6;">
+            <li>Shared Twin Cabin: <strong>£4,995</strong> per person</li>
+            <li>Private Cabin (Single Occupancy): <strong>£8,295</strong> per person</li>
+          </ul>
         </div>
       </div>
 
       <!-- Standard -->
-      <div style="background:linear-gradient(180deg,#1F3136,#2a4449); border-radius:16px; padding:40px 36px; color:#fff;">
-        <div style="display:inline-block; background:rgba(226,204,195,0.2); color:var(--blush); font-size:12px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:5px 12px; border-radius:4px; margin-bottom:20px;">Standard · From 1 August 2026</div>
-        <h3 class="h3" style="color:#fff; margin-bottom:24px;">Standard Pricing</h3>
-        <div style="display:flex; flex-direction:column; gap:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.14);">
-            <div>Shared Twin Cabin</div>
-            <div style="font-family:'Gloock',serif; font-size:26px; color:var(--blush);">£5,495 <span style="font-family:'Work Sans',sans-serif; font-size:13px; color:rgba(255,255,255,0.7);">/ person</span></div>
-          </div>
-          <div style="display:flex; justify-content:space-between; align-items:baseline;">
-            <div>Private Cabin (Single Occupancy)</div>
-            <div style="font-family:'Gloock',serif; font-size:26px; color:var(--blush);">£8,795 <span style="font-family:'Work Sans',sans-serif; font-size:13px; color:rgba(255,255,255,0.7);">/ person</span></div>
-          </div>
+      <div style="position:relative; border-radius:16px; overflow:hidden; min-height:320px; display:flex; flex-direction:column; justify-content:flex-end;">
+        <img src="assets/images/Standard Rate.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;" />
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(31,49,54,0.15) 0%, rgba(31,49,54,0.75) 70%); z-index:1;"></div>
+        <div style="position:relative; z-index:2; padding:36px 32px; color:#fff;">
+          <h3 style="font-family:'Gloock',serif; font-size:28px; font-weight:400; margin-bottom:6px;">Standard Pricing</h3>
+          <p style="font-style:italic; font-size:13px; color:var(--blush); margin-bottom:20px;">(From 1 August 2026)</p>
+          <ul style="list-style:disc; padding-left:20px; display:flex; flex-direction:column; gap:8px; font-size:15px; line-height:1.6;">
+            <li>Shared Twin Cabin: <strong>£5,495</strong> per person</li>
+            <li>Private Cabin (Single Occupancy): <strong>£8,795</strong> per person</li>
+          </ul>
         </div>
       </div>
     </div>
-
-    <p class="body-sm" style="text-align:center; color:var(--mauve); font-style:italic;">Places are limited to the number of cabins available aboard our private Dahabiya. A deposit secures your place, with payment plans available on request.</p>
   </div>
 </section>
 
