@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Nile Alchemy — The Modern Ashram</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    html, body { background:#FFFBFB !important; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+    body { padding:0 !important; gap:0 !important; }
+    .panel { border-radius:0 !important; break-inside:avoid; page-break-inside:avoid; }
+    section.panel, footer.panel { break-before:auto; break-after:auto; }
+    .hero { height:auto !important; min-height:auto !important; padding:80px 40px !important; }
+    .invitation, .foundations, .accom, .itinerary, .balloon, .inclusions, .final-cta { padding:60px 40px !important; }
+    .cabin-tier, .stop, .incl-grid, .cards-grid, .gallery-hotel, .cabin-photos, .foundations-inner { break-inside:avoid; page-break-inside:avoid; }
+    .nav { display:none !important; }
+    .hero { padding-top:60px !important; }
+    a { color:inherit; text-decoration:none; }
+    * { animation:none !important; transition:none !important; }
+  }
+  @font-face { font-family:"Work Sans"; src:url("assets/fonts/WorkSans-VariableFont_wght.ttf") format("truetype"); font-weight:100 900; }
+  @font-face { font-family:"Work Sans"; src:url("assets/fonts/WorkSans-Italic-VariableFont_wght.ttf") format("truetype"); font-weight:100 900; font-style:italic; }
+  :root {
+    --teal:#1F3136; --green:#547063; --mauve:#9A8480; --sand:#B68E73;
+    --blush:#E2CCC3; --sage:#D1DFDC; --cream:#FFFBFB;
+
+    /* Brand palette — added from Home Page nav/footer */
+    --c-deep-teal:    #1F3136;
+    --c-forest-green: #547063;
+    --c-dusty-mauve:  #9A8480;
+    --c-warm-sand:    #B68E73;
+    --c-blush:        #E2CCC3;
+    --c-sage-mist:    #D1DFDC;
+    --c-cream:        #F7F3EC;
+
+    --font-display: "Gloock", "Gloock Local", Georgia, serif;
+    --font-body:    "Work Sans", "Work Sans Local", system-ui, sans-serif;
+
+    --radius-section: 22px;
+    --radius-card:    16px;
+    --radius-btn:     8px;
+  }
+  *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--cream); font-family:"Work Sans",sans-serif; color:var(--teal); -webkit-font-smoothing:antialiased; padding:9px; display:flex; flex-direction:column; gap:9px; }
+
+  .eyebrow { font-family:"Work Sans",sans-serif; font-size:19px; font-weight:500; letter-spacing:0.04em; text-transform:none; color:var(--blush); }
+  .eyebrow.light-bg { color:var(--mauve); }
+  .h1 { font-family:"Gloock",serif; font-size:clamp(48px,7vw,96px); font-weight:400; line-height:1.02; letter-spacing:-0.015em; text-wrap:balance; }
+  .h2 { font-family:"Gloock",serif; font-size:clamp(34px,4.4vw,60px); font-weight:400; line-height:1.08; letter-spacing:-0.012em; text-wrap:balance; }
+  .h3 { font-family:"Gloock",serif; font-size:clamp(24px,2.8vw,36px); font-weight:400; line-height:1.15; letter-spacing:-0.005em; text-wrap:balance; }
+  .h4 { font-family:"Gloock",serif; font-size:22px; font-weight:400; line-height:1.2; text-wrap:balance; }
+  .body-lg { font-size:18px; line-height:1.7; font-weight:400; text-wrap:pretty; }
+  .body-md { font-size:16px; line-height:1.7; text-wrap:pretty; }
+  .body-sm { font-size:14px; line-height:1.55; text-wrap:pretty; }
+  .italic-serif { font-family:"Gloock",serif; font-style:italic; }
+
+  .btn { display:inline-flex; align-items:center; gap:10px; padding:13px 28px; border-radius:8px; border:none; cursor:pointer; text-decoration:none; font-family:"Work Sans",sans-serif; font-size:16px; font-weight:500; letter-spacing:0.04em; transition:all 0.25s; white-space:nowrap; }
+  .btn-primary { background:linear-gradient(to right,var(--teal),var(--green)); color:#fff; }
+  .btn-primary:hover { background:linear-gradient(to right,#2a4449,#6a8879); }
+  .btn-reverse { background:linear-gradient(to right,var(--mauve),var(--sand)); color:#fff; }
+  .btn-reverse:hover { background:linear-gradient(to right,#a89390,#c49e80); }
+  .btn-ghost { background:transparent; border:1.5px solid rgba(255,255,255,0.6); color:#fff; }
+  .btn-ghost:hover { background:rgba(255,255,255,0.08); border-color:#fff; }
+
+  .panel { border-radius:22px; overflow:hidden; }
+
+  /* ────────── NAV (canonical — keep in sync across all pages) ────────── */
+  .nav {
+    background: #FFFBFB;
+    height: 96px;
+    padding: 0 60px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    position: relative;
+    border-radius: 22px;
+  }
+  .nav-burger {
+    display: none;
+    width: 32px; height: 32px;
+    border: none; background: transparent; cursor: pointer; padding: 0;
+    flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+    grid-column: 1; justify-self: start;
+  }
+  .nav-burger span {
+    display: block; width: 22px; height: 2px; background: #1F3136; border-radius: 1px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .nav-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    justify-self: start; grid-column: 1;
+  }
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400;
+    color: #1F3136; text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-links .has-caret { display: inline-flex; align-items: center; gap: 6px; }
+  .nav-links .has-caret::after {
+    content: ""; width: 10px; height: 5px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'><path d='M5 5L0 0h10z'/></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'><path d='M5 5L0 0h10z'/></svg>") no-repeat center / contain;
+    transition: transform 0.2s ease;
+  }
+  .nav-dropdown { position: relative; display: flex; align-items: center; }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: #fffbfb;
+    border-radius: 10px;
+    padding: 8px 0;
+    min-width: 220px;
+    box-shadow: 0 8px 24px rgba(31,49,54,0.12), 0 2px 6px rgba(31,49,54,0.06);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 100;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown:focus-within .nav-dropdown-menu {
+    opacity: 1; visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .nav-dropdown:hover .has-caret::after { transform: rotate(180deg); }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400;
+    color: #1F3136;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.15s ease, opacity 0.15s ease;
+    border-radius: 6px; margin: 2px 6px;
+  }
+  .nav-dropdown-menu a:hover { background: #F7F3EC; opacity: 1; }
+  .nav-logo {
+    justify-self: center;
+    width: 82px; height: 77px;
+    background: url("assets/images/The Modern Ashram TOP NAV LOGO.svg") center / contain no-repeat;
+    grid-column: 2;
+  }
+  .nav-cta {
+    justify-self: end;
+    background: linear-gradient(270deg, #547063 0%, #1F3136 100%);
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 28px;
+    font-family: var(--font-body); font-weight: 500; font-size: 16px;
+    line-height: 1.4;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: opacity 0.2s;
+    grid-column: 3;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+  @media (max-width: 1024px) {
+    .nav { display: flex; align-items: center; gap: 12px; height: 72px; padding: 0 20px; grid-template-columns: none; column-gap: 0; }
+    .nav-burger { display: flex; order: 3; align-self: center; flex-shrink: 0; margin-left: 14px; }
+    .nav-links {
+      position: absolute;
+      top: calc(100% + 9px); left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 0;
+      background: #FFFBFB; border-radius: 16px; padding: 16px;
+      box-shadow: 0 12px 30px rgba(31,49,54,0.15);
+      opacity: 0; visibility: hidden; transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      z-index: 50;
+    }
+    .nav-burger[aria-expanded="true"] ~ .nav-links { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-links a { display: block; padding: 12px 16px; border-radius: 8px; font-size: 16px; }
+    .nav-links a:hover { opacity: 1; background: #F7F3EC; }
+    .nav-dropdown { display: block; align-items: stretch; }
+    .nav-dropdown-menu {
+      position: static; transform: none; box-shadow: none;
+      opacity: 1; visibility: visible;
+      padding: 4px 0 8px 16px; background: transparent; min-width: 0;
+    }
+    .nav-dropdown-menu a { padding: 10px 16px; font-size: 14px; }
+    .nav-dropdown:hover .has-caret::after,
+    .nav-dropdown:focus-within .has-caret::after { transform: none; }
+    .nav-logo { width: 56px; height: 61px; order: 1; align-self: center; flex-shrink: 0; }
+    .nav-cta { padding: 9px 20px; font-size: 14px; order: 2; align-self: center; flex-shrink: 0; margin-left: auto; }
+  }
+  @media (max-width: 767px) {
+    .nav { padding: 0 14px; height: 60px; }
+    .nav-logo { width: 46px; height: 50px; }
+    .nav-cta { padding: 8px 16px; font-size: 13px; }
+    .nav-links { padding: 12px; border-radius: 12px; }
+  }
+
+  /* HERO */
+  .hero { position:relative; height:calc(100vh - 123px); min-height:720px; background:linear-gradient(180deg,rgba(31,49,54,0.32) 0%,rgba(31,49,54,0.15) 40%,rgba(31,49,54,0.70) 100%), url("assets/images/Main Photo instead of the Pyramids.jpg") center/cover no-repeat; display:flex; align-items:flex-end; color:#fff; }
+  .hero-inner { padding:88px 72px; width:100%; max-width:1400px; }
+  .hero-meta { display:flex; gap:28px; align-items:center; margin-bottom:22px; font-size:15px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.92); }
+  .hero-meta span { display:flex; align-items:center; gap:8px; }
+  .hero-meta .dot { width:3px; height:3px; background:var(--blush); border-radius:50%; }
+  .hero h1 { color:#fff; max-width:1100px; }
+  .hero .tagline { font-family:"Gloock",serif; font-style:italic; font-size:clamp(20px,2vw,26px); color:var(--blush); margin:22px 0 16px; }
+  .hero .intro { color:rgba(255,255,255,0.92); font-size:17px; line-height:1.65; max-width:560px; margin-bottom:40px; }
+  .hero-actions { display:flex; gap:12px; flex-wrap:wrap; }
+
+  /* INVITATION — If you are looking for… */
+  .invitation { padding:120px 72px 96px; }
+  .invitation-top { display:grid; grid-template-columns:1fr 1.2fr; gap:72px; align-items:end; margin-bottom:72px; max-width:1320px; margin-left:auto; margin-right:auto; }
+  .invitation-top .kicker { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+  .invitation-top .kicker::before { content:""; width:40px; height:1px; background:var(--mauve); }
+  .cards-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; max-width:1400px; margin:0 auto; }
+  .card-img {
+    position:relative; border-radius:16px; overflow:hidden; aspect-ratio:3/4;
+    background-size:cover; background-position:center;
+    display:flex; flex-direction:column; justify-content:flex-end; padding:28px; color:#fff;
+  }
+  .card-img::before { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(31,49,54,0) 40%,rgba(31,49,54,0.85) 100%); }
+  .card-img > * { position:relative; z-index:1; }
+  .card-num { font-family:"Gloock",serif; font-size:60px; color:var(--blush); line-height:1; margin-bottom:auto; opacity:0.95; }
+  .card-title { font-family:"Gloock",serif; font-size:22px; line-height:1.2; margin-bottom:10px; }
+  .card-body { font-size:14px; line-height:1.55; color:rgba(255,255,255,0.88); }
+  .invitation-closer { text-align:center; margin-top:72px; }
+  .invitation-closer .q { font-family:"Gloock",serif; font-size:clamp(28px,3.2vw,44px); color:var(--teal); line-height:1.2; max-width:680px; margin:0 auto; }
+
+  /* FOUNDATIONS — Venn infographic */
+  .foundations { position:relative; padding:140px 72px; background:var(--teal); color:#fff; overflow:hidden; }
+  .foundations::before {
+    content:""; position:absolute; inset:0; opacity:0.10;
+    background:url("assets/images/AdobeStock_308678439.jpeg") center/cover no-repeat;
+  }
+  .foundations-inner { position:relative; max-width:1500px; margin:0 auto; display:grid; grid-template-columns:1fr 2fr; gap:80px; align-items:center; }
+  .foundations-copy h2 { color:#fff; margin-bottom:22px; }
+  .foundations-copy .eyebrow { display:inline-block; margin-bottom:18px; }
+  .foundations-copy p { color:rgba(255,255,255,0.78); font-size:17px; line-height:1.75; max-width:440px; }
+
+  /* ACCOMMODATION — integrated pricing + galleries */
+  .accom { padding:120px 72px 120px; }
+  .accom-head { max-width:1320px; margin:0 auto 72px; display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:end; }
+  .accom-head .kicker { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+  .accom-head .kicker::before { content:""; width:40px; height:1px; background:var(--mauve); }
+  .accom-head p { color:var(--teal); max-width:500px; }
+
+  /* Cabin tier block — price card + photo mosaic in one row */
+  .cabin-tier { max-width:1400px; margin:0 auto 9px; display:grid; grid-template-columns:360px 1fr; gap:9px; align-items:stretch; }
+  .cabin-tier:last-of-type { margin-bottom:0; }
+  .cabin-info {
+    background:var(--teal); color:#fff; border-radius:16px;
+    padding:36px 32px; display:flex; flex-direction:column; justify-content:space-between; min-height:420px;
+  }
+  .cabin-info .tier-tag { font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--blush); margin-bottom:12px; font-weight:600; }
+  .cabin-info h3 { font-family:"Gloock",serif; font-size:34px; color:#fff; font-weight:400; line-height:1.1; margin-bottom:10px; letter-spacing:-0.01em; }
+  .cabin-info .tier-sub { font-family:"Gloock",serif; font-style:italic; font-size:16px; color:var(--blush); margin-bottom:28px; }
+  .cabin-info .price-rows { border-top:1px solid rgba(255,255,255,0.12); margin-top:auto; }
+  .cabin-info .price-row { display:flex; justify-content:space-between; align-items:baseline; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.12); }
+  .cabin-info .price-row:last-child { border-bottom:none; }
+  .cabin-info .price-row .p-lbl { font-size:12px; color:#fff; letter-spacing:0.06em; text-transform:uppercase; }
+  .cabin-info .price-row .p-amt { font-family:"Gloock",serif; font-size:22px; color:#fff; }
+  .cabin-info .includes { font-size:12px; color:rgba(255,255,255,0.62); line-height:1.6; margin-top:20px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.12); }
+  .cabin-info .includes b { color:#fff; font-weight:500; display:block; margin-bottom:6px; letter-spacing:0.1em; text-transform:uppercase; font-size:10px; }
+
+  /* Photo mosaics per tier */
+  .cabin-photos { display:grid; gap:9px; }
+  .cabin-photos > div { background-size:cover; background-position:center; border-radius:16px; min-height:140px; }
+  /* Luxury Cabins — 3 images: tall left + two stacked right */
+  .cabin-photos.deluxe {
+    grid-template-columns:1.4fr 1fr;
+    grid-template-rows:1fr 1fr;
+  }
+  .cabin-photos.deluxe .p1 { grid-column:1; grid-row:1/3; }
+  .cabin-photos.deluxe .p2 { grid-column:2; grid-row:1; }
+  .cabin-photos.deluxe .p3 { grid-column:2; grid-row:2; }
+
+  /* Junior Suites — 3 images: two landscapes stacked left + tall portrait right */
+  .cabin-photos.junior {
+    grid-template-columns:1.5fr 1fr;
+    grid-template-rows:1fr 1fr;
+  }
+  .cabin-photos.junior .p1 { grid-column:1; grid-row:1; }
+  .cabin-photos.junior .p2 { grid-column:1; grid-row:2; }
+  .cabin-photos.junior .p3 { grid-column:2; grid-row:1/3; }
+
+  /* Lumière Suite — 4 images: hero bedroom top + 3 below; taller grid to give the hero a landscape frame */
+  .cabin-photos.lumiere {
+    grid-template-columns:1fr 1fr 1fr;
+    grid-template-rows:320px 180px;
+  }
+  .cabin-photos.lumiere .p1 { grid-column:1/4; grid-row:1; }
+  .cabin-photos.lumiere .p2 { grid-column:1; grid-row:2; }
+  .cabin-photos.lumiere .p3 { grid-column:2; grid-row:2; }
+  .cabin-photos.lumiere .p4 { grid-column:3; grid-row:2; }
+
+  /* Sundeck strip — shared amenity callout */
+  .sundeck-strip { max-width:1400px; margin:40px auto 0; display:grid; grid-template-columns:1.4fr 1fr; gap:9px; align-items:stretch; }
+  .sundeck-img { border-radius:16px; background:url("assets/images/Lumiere_Dahabeya_41.jpg") center/cover no-repeat; min-height:260px; }
+  .sundeck-note { background:var(--sage); border-radius:16px; padding:40px 36px; display:flex; flex-direction:column; justify-content:center; }
+  .sundeck-note h4 { font-family:"Gloock",serif; font-size:26px; color:var(--teal); font-weight:400; margin-bottom:10px; line-height:1.15; letter-spacing:-0.01em; }
+  .sundeck-note p { font-size:14px; color:var(--teal); line-height:1.65; }
+
+  /* Al-Moudira section — still a gallery block */
+  .accom-block { max-width:1400px; margin:108px auto 0; }
+  .accom-block-title { display:flex; justify-content:space-between; align-items:end; gap:32px; margin-bottom:32px; padding:0 4px; }
+  .accom-block-title h3 { font-family:"Gloock",serif; font-size:clamp(28px,3vw,40px); color:var(--teal); font-weight:400; letter-spacing:-0.01em; }
+  .accom-block-title .loc { font-size:12px; color:var(--mauve); letter-spacing:0.14em; text-transform:uppercase; }
+
+  .gallery-hotel {
+    display:grid; gap:9px;
+    grid-template-columns:repeat(6,1fr);
+    grid-template-rows:280px 220px;
+  }
+  .gallery-hotel .h1 { grid-column:1/5; grid-row:1/2; }
+  .gallery-hotel .h2 { grid-column:5/7; grid-row:1/2; }
+  .gallery-hotel .h3 { grid-column:1/3; grid-row:2/3; }
+  .gallery-hotel .h4 { grid-column:3/5; grid-row:2/3; }
+  .gallery-hotel .h5 { grid-column:5/7; grid-row:2/3; }
+  .gallery-hotel > div { background-size:cover; background-position:center; border-radius:16px; }
+
+  /* PRICING — compact chips beneath accommodation */
+  .pricing { padding:96px 72px 120px; background:var(--cream); }
+  .pricing-inner { max-width:1320px; margin:0 auto; }
+  .pricing-head { text-align:center; margin-bottom:56px; }
+  .pricing-head .eyebrow { display:inline-block; margin-bottom:18px; }
+  .pricing-head p { color:var(--teal); max-width:620px; margin:18px auto 0; }
+  .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
+  .price-card { background:#fff; padding:36px 32px; border-radius:16px; border:1px solid rgba(31,49,54,0.08); display:flex; flex-direction:column; }
+  .price-card.featured { background:var(--teal); color:#fff; border-color:transparent; }
+  .price-card .tier { font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--mauve); margin-bottom:10px; font-weight:600; }
+  .price-card.featured .tier { color:var(--blush); }
+  .price-card h4 { font-family:"Gloock",serif; font-size:26px; margin-bottom:18px; color:var(--teal); font-weight:400; line-height:1.15; }
+  .price-card.featured h4 { color:#fff; }
+  .price-row { display:flex; justify-content:space-between; align-items:baseline; padding:14px 0; border-bottom:1px solid rgba(31,49,54,0.08); }
+  .price-card.featured .price-row { border-color:rgba(255,255,255,0.12); }
+  .price-row:last-child { border-bottom:none; }
+  .price-row .label { font-size:13px; color:var(--green); }
+  .price-card.featured .price-row .label { color:rgba(255,255,255,0.7); }
+  .price-row .amount { font-family:"Gloock",serif; font-size:20px; color:var(--teal); }
+  .price-card.featured .price-row .amount { color:#fff; }
+  .price-card .incl { font-size:12px; color:var(--green); margin-top:20px; padding-top:20px; border-top:1px solid rgba(31,49,54,0.08); line-height:1.6; }
+  .price-card.featured .incl { color:rgba(255,255,255,0.7); border-color:rgba(255,255,255,0.12); }
+
+  /* ITINERARY — vertical timeline */
+  .itinerary { padding:120px 72px 120px; background:var(--teal); color:#fff; position:relative; overflow:hidden; }
+  .itinerary::before {
+    content:""; position:absolute; inset:0; opacity:0.07;
+    background:url("assets/images/AdobeStock_523369556.jpeg") center/cover no-repeat;
+  }
+  .itin-inner { position:relative; max-width:1320px; margin:0 auto; }
+  .itin-head { text-align:center; max-width:720px; margin:0 auto 88px; }
+  .itin-head h2 { color:#fff; }
+  .itin-head p { color:rgba(255,255,255,0.72); margin-top:20px; font-size:17px; line-height:1.65; }
+  .itin-head .eyebrow { color:var(--blush); display:inline-block; margin-bottom:18px; }
+  /* Timeline spine + alternating stops */
+  .timeline { position:relative; padding:0 40px; }
+  .timeline::before {
+    content:""; position:absolute; left:50%; top:0; bottom:0; width:1px;
+    background:linear-gradient(180deg,transparent 0%,rgba(226,204,195,0.5) 8%,rgba(226,204,195,0.5) 92%,transparent 100%);
+    transform:translateX(-0.5px);
+  }
+  .stop { position:relative; display:grid; grid-template-columns:1fr 80px 1fr; gap:0; margin-bottom:88px; align-items:center; }
+  .stop:last-child { margin-bottom:0; }
+  .stop-marker { position:relative; width:80px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding-top:28px; }
+  .stop-marker .dot { width:14px; height:14px; border-radius:50%; background:var(--blush); border:3px solid var(--teal); box-shadow:0 0 0 1px var(--blush); z-index:2; }
+  .stop-marker .day { position:absolute; top:54px; left:50%; transform:translateX(-50%); font-family:"Gloock",serif; font-size:13px; color:var(--blush); letter-spacing:0.12em; white-space:nowrap; text-transform:uppercase; }
+  .stop-content { padding:0 48px; }
+  .stop-img { border-radius:16px; overflow:hidden; aspect-ratio:4/3; background-size:cover; background-position:center; }
+  .stop-content .loc-eyebrow { font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--blush); margin-bottom:12px; display:flex; align-items:center; gap:10px; }
+  .stop-content .loc-eyebrow::before { content:""; width:24px; height:1px; background:var(--blush); }
+  .stop-content h3 { font-family:"Gloock",serif; font-size:clamp(32px,4vw,48px); font-weight:400; color:#fff; line-height:1.05; margin-bottom:18px; letter-spacing:-0.01em; }
+  .stop-content p { color:rgba(255,255,255,0.82); font-size:15px; line-height:1.7; margin-bottom:20px; }
+  .stop-content .visiting-label { font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--blush); margin-bottom:12px; opacity:0.85; }
+  .stop-content .visiting { list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .stop-content .visiting li { font-size:14px; color:rgba(255,255,255,0.9); padding-left:22px; position:relative; line-height:1.5; }
+  .stop-content .visiting li::before { content:""; position:absolute; left:0; top:9px; width:12px; height:1px; background:var(--mauve); }
+  /* Alternate layout */
+  .stop.left .stop-content  { grid-column:1; text-align:right; padding-right:64px; padding-left:0; }
+  .stop.left .stop-content .loc-eyebrow { justify-content:flex-end; }
+  .stop.left .stop-content .loc-eyebrow::before { display:none; }
+  .stop.left .stop-content .loc-eyebrow::after { content:""; width:24px; height:1px; background:var(--blush); }
+  .stop.left .stop-content .visiting li { padding-left:0; padding-right:22px; }
+  .stop.left .stop-content .visiting li::before { left:auto; right:0; }
+  .stop.left .stop-img     { grid-column:3; }
+  .stop.right .stop-img    { grid-column:1; }
+  .stop.right .stop-content { grid-column:3; padding-left:64px; padding-right:0; }
+
+  /* FACILITATORS */
+  .facilitators { padding:120px 72px; background:var(--cream); text-align:center; }
+  .facilitators-inner { max-width:1320px; margin:0 auto; }
+  .facilitators-head { max-width:680px; margin:0 auto 72px; }
+  .facilitators .eyebrow { display:inline-block; color:var(--green); font-size:17px; margin-bottom:18px; }
+  .facilitators h2 { color:var(--teal); margin-bottom:20px; }
+  .facilitators-intro { color:var(--teal); font-size:17px; line-height:1.7; max-width:560px; margin:0 auto; }
+  .facilitators-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:88px; margin-bottom:72px; align-items:stretch; }
+  .facilitator { display:flex; flex-direction:column; align-items:center; text-align:center; height:100%; }
+  .facilitator-photo { width:280px; height:280px; max-width:100%; aspect-ratio:1/1; border-radius:50%; background-size:cover; background-position:center top; margin-bottom:32px; }
+  .facilitator-photo.is-placeholder { background:var(--sage); position:relative; }
+  .facilitator-photo.is-placeholder::after { content:"Photo pending"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:var(--font-body); font-size:13px; color:var(--teal); opacity:0.6; letter-spacing:0.03em; }
+  .facilitator-name { font-family:"Work Sans",sans-serif; font-size:21px; font-weight:500; color:var(--green); margin-bottom:18px; letter-spacing:0.01em; }
+  .facilitator-bio { color:var(--teal); font-size:15px; line-height:1.7; max-width:300px; margin:0 auto 24px; }
+  .facilitator--wide .facilitator-bio { max-width:325px; }
+  .facilitator-ig { margin-top:auto; display:inline-flex; align-items:center; justify-content:center; transition:opacity 0.2s; }
+  .facilitator-ig:hover { opacity:0.7; }
+  .facilitator-ig img { width:24px; height:24px; display:block; }
+  .facilitators-cta { display:flex; justify-content:center; }
+
+  /* BALLOON */
+  .balloon { position:relative; padding:140px 72px; background:linear-gradient(rgba(31,49,54,0.35),rgba(31,49,54,0.68)), url("assets/images/hot air ballon for eternal nile.jpg") center/cover no-repeat; color:#fff; text-align:center; }
+  .balloon-inner { max-width:720px; margin:0 auto; }
+  .balloon .eyebrow { display:inline-block; margin-bottom:20px; color:var(--blush); }
+  .balloon h2 { color:#fff; margin-bottom:20px; }
+  .balloon p { color:rgba(255,255,255,0.88); font-size:17px; line-height:1.7; margin-bottom:32px; }
+
+  /* INCLUSIONS — Visual mosaic */
+  .inclusions { padding:120px 72px; }
+  .inclusions-inner { max-width:1400px; margin:0 auto; }
+  .inclusions-head { text-align:center; max-width:680px; margin:0 auto 80px; }
+  .inclusions-head .eyebrow.light-bg { display:inline-block; margin-bottom:18px; }
+  .inclusions-head p { color:var(--teal); margin-top:18px; font-size:17px; line-height:1.65; }
+  /* Category grid — each card has a small image and inclusion list */
+  .incl-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:9px; }
+  .incl-card { background:#fff; border-radius:16px; overflow:hidden; border:1px solid rgba(31,49,54,0.08); display:flex; flex-direction:column; }
+  .incl-card .top-img { height:180px; background-size:cover; background-position:center; position:relative; }
+  .incl-card .top-img::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(31,49,54,0) 50%,rgba(31,49,54,0.3) 100%); }
+  .incl-card .body { padding:26px 28px 28px; flex:1; display:flex; flex-direction:column; }
+  .incl-card .cat { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--mauve); margin-bottom:8px; font-weight:600; }
+  .incl-card h4 { font-family:"Gloock",serif; font-size:22px; color:var(--teal); margin-bottom:16px; font-weight:400; line-height:1.2; }
+  .incl-card ul { list-style:none; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .incl-card li { font-size:14px; line-height:1.5; color:var(--teal); padding-left:22px; position:relative; }
+  .incl-card li::before { content:""; position:absolute; left:0; top:9px; width:12px; height:1px; background:var(--green); }
+  /* Excluded card */
+  .incl-excluded { background:var(--teal); color:#fff; border-radius:16px; padding:40px 48px; display:grid; grid-template-columns:auto 1fr; gap:0; align-items:center; }
+  .incl-excluded .left { padding-right:32px; border-right:1px solid rgba(255,255,255,0.2); }
+  .incl-excluded .left h4 { font-family:"Gloock",serif; font-size:22px; color:var(--blush); margin-bottom:6px; font-weight:400; }
+  .incl-excluded .left p  { font-size:13px; color:rgba(255,255,255,0.65); }
+  .incl-excluded ul { list-style:none; display:grid; grid-template-columns:1fr 1fr; column-gap:36px; row-gap:14px; width:100%; padding-left:32px; }
+  .incl-excluded li { font-size:14px; line-height:1.4; color:rgba(255,255,255,0.88); padding-left:22px; position:relative; display:flex; align-items:center; min-height:18px; }
+  .incl-excluded li::before { content:"×"; position:absolute; left:0; top:50%; transform:translateY(-50%); color:var(--blush); font-size:18px; line-height:1; }
+
+  /* FINAL CTA */
+  .final-cta { padding:140px 72px; background:linear-gradient(rgba(31,49,54,0.58),rgba(31,49,54,0.68)), url("assets/images/Philae Temple.png") center/cover no-repeat; color:#fff; text-align:center; border-radius:22px; }
+  .final-cta-inner { max-width:700px; margin:0 auto; }
+  .final-cta .eyebrow { display:inline-block; margin-bottom:20px; }
+  .final-cta h2 { color:#fff; margin-bottom:20px; }
+  .final-cta p { max-width:620px; margin:0 auto 32px; color:rgba(255,255,255,0.88); font-size:17px; line-height:1.7; }
+  .final-cta .email { color:var(--blush); font-weight:500; }
+  .final-cta .note { font-size:13px; color:#fff; margin-top:28px; }
+
+  /* ────────── FOOTER ────────── */
+  .footer {
+    background: #FFFBFB;
+    padding: 90px 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+  }
+  .footer-logo {
+    width: 220px; height: 240px;
+    background: url("assets/images/The Modern Ashram Logo FOOTER.svg") center / contain no-repeat;
+  }
+  .footer-nav {
+    display: flex; align-items: center; gap: 64px;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .footer-nav a {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--c-deep-teal);
+    text-decoration: none;
+    line-height: 1.5;
+    transition: opacity 0.2s;
+  }
+  .footer-nav a:hover { opacity: 0.6; }
+
+  .footer-instagram {
+    width: 28px; height: 28px;
+    text-decoration: none;
+    display: inline-flex;
+    transition: opacity 0.2s;
+  }
+  .footer-instagram:hover { opacity: 0.7; }
+  .footer-instagram img { width: 28px; height: 28px; display: block; }
+
+  .footer-divider {
+    width: 100%;
+    max-width: 100%;
+    height: 1px;
+    background: rgba(31, 49, 54, 0.4);
+    margin: 16px 0 0;
+  }
+  .footer-legal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 16px;
+  }
+  .footer-legal-left {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: #1f3136;
+  }
+  .footer-legal-right { display: flex; gap: 40px; flex-wrap: wrap; }
+  .footer-legal-right a {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: #1f3136;
+    text-decoration: none;
+  }
+  .footer-legal-right a:hover { opacity: 0.7; }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .foundations-inner { grid-template-columns:1fr !important; gap:56px !important; }
+    .cabin-tier { grid-template-columns:1fr !important; }
+    .cabin-info { min-height:auto !important; }
+    .cabin-photos { grid-template-columns:1fr 1fr !important; grid-template-rows:auto !important; }
+    .cabin-photos > div { grid-column:auto !important; grid-row:auto !important; min-height:180px; }
+    .sundeck-strip { grid-template-columns:1fr !important; }
+    .stop { grid-template-columns:1fr !important; gap:24px !important; margin-bottom:56px !important; }
+    .stop .stop-marker { display:none; }
+    .stop .stop-content, .stop.left .stop-content, .stop.right .stop-content { grid-column:1 !important; padding:0 !important; text-align:left !important; }
+    .stop .stop-img, .stop.left .stop-img, .stop.right .stop-img { grid-column:1 !important; aspect-ratio:16/10; }
+    .stop.left .stop-content .loc-eyebrow { justify-content:flex-start; }
+    .stop.left .stop-content .loc-eyebrow::after { display:none; }
+    .stop.left .stop-content .loc-eyebrow::before { content:""; display:inline-block; width:24px; height:1px; background:var(--blush); }
+    .timeline::before { display:none; }
+  }
+  @media (max-width: 1024px) {
+    .facilitators { padding:96px 32px; }
+    .facilitators-grid { gap:32px; margin-bottom:56px; }
+    .facilitator-photo { width:200px; height:200px; margin-bottom:24px; }
+    .facilitator-bio, .facilitator--wide .facilitator-bio { max-width:100%; font-size:14px; }
+    .facilitator-name { font-size:19px; margin-bottom:14px; }
+  }
+  @media (max-width: 900px) {
+    body { padding:9px; }
+    .hero-inner, .invitation, .foundations, .accom, .itinerary, .balloon, .inclusions, .pricing, .final-cta, .facilitators { padding:72px 24px !important; }
+    .pricing > div > div[style*="grid-template-columns:repeat(2"] { grid-template-columns:1fr !important; gap:20px !important; }
+    .cards-grid, .foundations-grid, .pricing-grid, .incl-grid, .invitation-top, .accom-head, .facilitators-grid { grid-template-columns:1fr !important; gap:9px; }
+    .facilitators-grid { gap:56px !important; margin-bottom:48px; }
+    .facilitator-photo { width:240px; height:240px; }
+    .gallery-boat, .gallery-hotel { grid-template-columns:1fr !important; grid-template-rows:auto !important; }
+    .gallery-boat > div, .gallery-hotel > div { grid-column:1 !important; grid-row:auto !important; aspect-ratio:16/10; }
+    .incl-excluded { grid-template-columns:1fr !important; gap:20px !important; padding:28px !important; }
+    .incl-excluded ul { grid-template-columns:1fr !important; gap:12px !important; }
+  }
+  .brk-sm { display: none; }
+  @media (max-width: 767px) {
+    .eyebrow { font-size: 17px; }
+    .brk-sm { display: initial; }
+    .pricing[style] { padding:72px 24px !important; }
+    .pricing div[style*="grid-template-columns:repeat(2"] { grid-template-columns:1fr !important; }
+    .pricing div[style*="padding:40px 36px"] { padding:32px 24px !important; }
+    .h1 { white-space: normal !important; font-size: 36px !important; }
+    .hero-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+    .hero-actions { flex-direction: column; gap: 10px; align-items: stretch; }
+    .hero-actions .btn { width: 100%; justify-content: center; }
+    .footer { padding: 60px 24px 30px; gap: 22px; }
+    .footer-logo { width: 130px; height: 142px; }
+    .footer-nav { gap: 32px; }
+    .footer-legal { flex-direction: column; gap: 12px; padding-top: 12px; }
+    .footer-legal-right { flex-direction: column; gap: 12px; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV (canonical — keep in sync across all pages) ───────────────── -->
+<nav class="nav" aria-label="Primary" data-screen-label="Nav">
+  <button class="nav-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="nav-menu">
+    <a href="/">Home</a>
+    <div class="nav-dropdown">
+      <a href="journeys" class="has-caret">Journeys</a>
+      <div class="nav-dropdown-menu">
+        <a href="the-eternal-nile">The Eternal Nile</a>
+        <a href="ancient-egyptian-odyssey">Ancient Egyptian Odyssey</a>
+      </div>
+    </div>
+    <a href="about">About</a>
+    <a href="contact">Contact</a>
+  </div>
+  <a href="/" class="nav-logo" aria-label="The Modern Ashram"></a>
+  <a href="contact" class="nav-cta">Enquire Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="panel hero" style="background: linear-gradient(rgba(31,49,54,0.30), rgba(31,49,54,0.30)), url('assets/images/Nile Alchemy Hero.png') center / cover no-repeat;">
+  <div class="hero-inner">
+    <div class="hero-meta">
+      <span><span class="dot"></span>Egypt</span>
+      <span><span class="dot"></span>9 Days</span>
+      <span><span class="dot"></span>15 – 23 November 2026</span>
+      <span><span class="dot"></span>Limited Cabins</span>
+    </div>
+    <h1 class="h1" style="white-space:nowrap;">The Nile Alchemy</h1>
+    <p class="tagline">"A journey through the Temples of Egypt<br class="brk-sm"> and the Temple within."</p>
+    <p class="intro">A once-in-a-lifetime pilgrimage through the sacred landscapes of Egypt — and the sacred landscapes within ourselves.</p>
+    <div class="hero-actions">
+      <a href="contact" class="btn btn-reverse">Enquire Now</a>
+      <a href="#itinerary" class="btn btn-ghost">View the Journey</a>
+    </div>
+  </div>
+</section>
+
+<!-- INVITATION -->
+<section class="panel invitation" style="background:var(--cream);">
+  <div class="invitation-top">
+    <div>
+      <div class="kicker"><span class="eyebrow light-bg">The Invitation</span></div>
+      <h2 class="h2">The Journey</h2>
+    </div>
+    <p class="body-lg" style="color:var(--teal);">The Nile Alchemy Journey is an invitation to experience Egypt not only through its extraordinary history, but through your own direct experience. Exploring our inner landscapes through various modalities that align with the wisdom of the temples we are visiting each day.</p>
+  </div>
+
+  <p class="body-md" style="text-align:center;color:var(--green);max-width:720px;margin:0 auto 40px;font-style:italic;">For The Explorers. For The Seekers. For The Curious Travellers. The Nile Alchemy Journey unfolds in three distinct phases.</p>
+
+  <div class="cards-grid">
+    <div class="card-img" style="background-image:url('assets/images/The Call.png'); background-position: center;">
+      <div class="card-num">01</div>
+      <h3 class="card-title">The Call</h3>
+      <p class="card-body">Opening with a private meditation inside the King's Chamber to begin our inner alchemical process. A doorway into the journey ahead.</p>
+    </div>
+    <div class="card-img" style="background-image:url('assets/images/The Alchemy.jpg'); background-position: center;">
+      <div class="card-num">02</div>
+      <h3 class="card-title">The Alchemy</h3>
+      <p class="card-body">A journey aboard a private luxury Dahabiya, traveling between the great temples of Egypt while weaving together breathwork, flow-dance meditation, sufi whirling, and sacred ceremony.</p>
+    </div>
+    <div class="card-img" style="background-image:url('assets/images/The Integration.png'); background-position: center;">
+      <div class="card-num">03</div>
+      <h3 class="card-title">The Integration</h3>
+      <p class="card-body">A spacious landing. Time to reflect, absorb and integrate all that the journey has revealed, while exploring some of Egypt's most extraordinary sacred sites.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ITINERARY — vertical timeline -->
+<section class="panel itinerary" id="itinerary">
+  <div class="itin-inner">
+    <div class="itin-head">
+      <div class="eyebrow">Your Itinerary</div>
+      <h2 class="h2">Nine days through Egypt's sacred landscapes</h2>
+      <p>Transfers, sightseeing, meals and private entrances — every detail held, so the only thing you need to carry is intention.</p>
+    </div>
+
+    <div class="timeline">
+
+      <div class="stop right">
+        <div class="stop-img" style="background-image:url('assets/images/Nile & Pyramids.png'); background-position:center;"></div>
+        <div class="stop-marker"><div class="dot"></div><div class="day">15 Nov</div></div>
+        <div class="stop-content">
+          <div class="loc-eyebrow">Phase 1 · The Call</div>
+          <h3>Arrival in Cairo</h3>
+          <p>Guests arrive throughout the day and settle into the Fairmont Cairo. Gather for our orientation opening group meeting. Time to rest, arrive, and prepare for the journey ahead.</p>
+        </div>
+      </div>
+
+      <div class="stop left">
+        <div class="stop-content">
+          <div class="loc-eyebrow">Phase 1 · Stepping into the portal</div>
+          <h3>The Great Pyramid &amp; Ancient Egypt</h3>
+          <p>Our first full day together begins with setting our intentions in one of the wonders of the world, during a two-hour private visit inside the King's Chamber, followed by a visit to the Sphinx. Leading to the Grand Egyptian Museum, the biggest museum dedicated to a single civilization. A delicious meal at Khufu's overlooking the pyramids.</p>
+        </div>
+        <div class="stop-marker"><div class="dot"></div><div class="day">16 Nov</div></div>
+        <div class="stop-img" style="background-image:url('assets/images/The Call.png');"></div>
+      </div>
+
+      <div class="stop right">
+        <div class="stop-img" style="background-image:url('assets/images/The Alchemy.jpg');"></div>
+        <div class="stop-marker"><div class="dot"></div><div class="day">17 Nov</div></div>
+        <div class="stop-content">
+          <div class="loc-eyebrow">Phase 2 · Surrender to the River</div>
+          <h3>Cairo to Aswan · Boarding the Dahabiya</h3>
+          <p>Morning flight from Cairo to Aswan. Board our private luxury Dahabiya (all meals included). The pyramids have called us. The Nile moves us. For the next four days, we begin our inner work as we allow the Nile River to carry us throughout the ancient temples on its sacred waters.</p>
+          <div class="visiting-label">Practices</div>
+          <ul class="visiting">
+            <li>Opening Flow Dance Meditation (coming into the body)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stop left">
+        <div class="stop-content">
+          <div class="loc-eyebrow">Phase 2 · Remembrance &amp; Polarity</div>
+          <h3>Philae Temple &amp; Kom Ombo</h3>
+          <p>A morning exploring the temple of Isis. The invitation is about holding polarities — honoring both strength and softness, masculine and feminine, light and shadow.</p>
+          <div class="visiting-label">Practices</div>
+          <ul class="visiting">
+            <li>Breathwork</li>
+            <li>Evening Flow Dance Meditation embodying today's theme</li>
+          </ul>
+        </div>
+        <div class="stop-marker"><div class="dot"></div><div class="day">18 Nov</div></div>
+        <div class="stop-img" style="background-image:url('assets/images/Nile Boat 2.png');"></div>
+      </div>
+
+      <div class="stop right">
+        <div class="stop-img" style="background-image:url('assets/images/Sufi Whirling.png');"></div>
+        <div class="stop-marker"><div class="dot"></div><div class="day">19 Nov</div></div>
+        <div class="stop-content">
+          <div class="loc-eyebrow">Phase 2 · Vision</div>
+          <h3>Edfu Temple</h3>
+          <p>Sunrise Sufi Whirling before breakfast. Later, we arrive at Edfu Temple — the Temple of Horus, the falcon, the higher perspective. The invitation is to see more clearly.</p>
+          <div class="visiting-label">Practices</div>
+          <ul class="visiting">
+            <li>Flow Dance Meditation</li>
+            <li>Optional evening ceremony</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stop left">
+        <div class="stop-content">
+          <div class="loc-eyebrow">Phase 2 · Flow</div>
+          <h3>The Nile Alchemy Day</h3>
+          <p>Our final full day aboard the Nile. A spacious day. Time for presence. Integration through movement. Conversation. Silence. Rest. The river becomes the teacher.</p>
+          <div class="visiting-label">Practices</div>
+          <ul class="visiting">
+            <li>Morning Breathwork</li>
+            <li>Flow Dance Meditation</li>
+            <li>Optional evening ceremony</li>
+          </ul>
+        </div>
+        <div class="stop-marker"><div class="dot"></div><div class="day">20 Nov</div></div>
+        <div class="stop-img" style="background-image:url('assets/images/Nile Sunrise Meditation.png');"></div>
+      </div>
+
+      <div class="stop right">
+        <div class="stop-img" style="background-image:url('assets/images/The Integration.png');"></div>
+        <div class="stop-marker"><div class="dot"></div><div class="day">21 Nov</div></div>
+        <div class="stop-content">
+          <div class="loc-eyebrow">Phase 3 · Landing</div>
+          <h3>Arrival in Luxor</h3>
+          <p>We arrive in Luxor and settle into the Steigenberger Hotel overlooking the Nile. Explore the Karnak Temple.</p>
+          <div class="visiting-label">Practices</div>
+          <ul class="visiting">
+            <li>Integration session</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stop left">
+        <div class="stop-content">
+          <div class="loc-eyebrow">Phase 3 · The Living Temple</div>
+          <h3>Valley of the Kings &amp; Closing Ceremony</h3>
+          <p>Before sunrise, guests can take a hot air balloon flight over Luxor. We visit the Valley of the Kings and the Valley of the Queens. In the evening, we gather for our closing dinner and closing ceremony.</p>
+          <div class="visiting-label">Practices</div>
+          <ul class="visiting">
+            <li>Integration session</li>
+            <li>Closing Ceremony</li>
+          </ul>
+        </div>
+        <div class="stop-marker"><div class="dot"></div><div class="day">22 Nov</div></div>
+        <div class="stop-img" style="background-image:url('assets/images/hot air ballon for eternal nile.jpg');"></div>
+      </div>
+
+      <div class="stop right">
+        <div class="stop-img" style="background-image:url('assets/images/The Nile.png');"></div>
+        <div class="stop-marker"><div class="dot"></div><div class="day">23 Nov</div></div>
+        <div class="stop-content">
+          <div class="loc-eyebrow">Departure Day</div>
+          <h3>The pilgrimage may be complete. The journey continues.</h3>
+          <p>Breakfast · Departures.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FACILITATORS -->
+<section class="panel facilitators">
+  <div class="facilitators-inner">
+    <div class="facilitators-head">
+      <div class="eyebrow">Hosted By</div>
+      <h2 class="h2">Meet your facilitators</h2>
+      <p class="facilitators-intro">Three experienced guides hold space with wisdom, embodiment and deep knowledge of Egypt's sacred sites.</p>
+    </div>
+    <div class="facilitators-grid">
+      <article class="facilitator">
+        <div class="facilitator-photo" style="background-image:url('assets/images/Lindsay Jay.jpeg');" role="img" aria-label="Lindsay Jay headshot"></div>
+        <h3 class="facilitator-name">Lindsay Jay</h3>
+        <p class="facilitator-bio">Lindsay Jay is the founder of Flow Dance Meditation and co-founder of YogaFit Retreats. She specializes in creating spaces to move, heal, and transform through movement, meditation, and embodied awareness.<br><br>Throughout this journey, Lindsay will guide Flow Dance Meditation, Sufi whirling, guided meditations and integration circles, offering space to slow down, listen deeply and integrate the magic of Egypt. From the Great Pyramid to the banks of the Nile, each practice is an invitation to experience this ancient land not only through seeing, but through feeling.</p>
+      </article>
+      <article class="facilitator">
+        <div class="facilitator-photo" style="background-image:url('assets/images/Fouad Facilitator Headshot.png');" role="img" aria-label="Fouad Sabet headshot"></div>
+        <h3 class="facilitator-name">Fouad Sabet <span style="font-family:'Gloock',serif; font-style:italic; font-weight:400; color:var(--mauve); font-size:16px;">(The Modern Ashram)</span></h3>
+        <p class="facilitator-bio">Fouad Sabet is the founder of the Modern Ashram. His work is titled "Bridging Ancient Wisdom with the Modern World." He has helped more than a thousand people return to themselves, discover their true essence, and heal trauma and inner blockages. He will be guiding people in his own land, facilitating ceremony and breathwork.<br><br>He started his journey by learning about meditation, the art of stillness, and holistic living from Eastern Gurus and teachers. His passion and goal are to help humanity thrive as individuals living in an increasingly busy and stressful world. Fouad's work involves realigning individuals through their unique energetic signature and purpose.</p>
+      </article>
+      <article class="facilitator">
+        <div class="facilitator-photo" style="background-image:url('assets/images/Cat Tettero.jpeg');" role="img" aria-label="Cat Tettero headshot"></div>
+        <h3 class="facilitator-name">Cat Tettero</h3>
+        <p class="facilitator-bio">Cat creates spaces for internal connection, where the wisdom of your body and all parts of our experience can be welcomed into awareness. Her work is rooted in the understanding that our relationship with our inner world becomes the foundation from which we meet ourselves, others, and life.<br><br>Through presence, breath, touch, and safe expression, she supports people in reconnecting with their felt sense of agency — the capacity to respond to life with greater awareness, freedom, and aliveness.</p>
+      </article>
+    </div>
+    <div class="facilitators-cta">
+      <a href="contact" class="btn btn-primary">Connect</a>
+    </div>
+  </div>
+</section>
+
+<!-- BALLOON -->
+<section class="panel balloon">
+  <div class="balloon-inner">
+    <div class="eyebrow">Optional Experience</div>
+    <h2 class="h2">Sunrise Hot Air Balloon over Luxor</h2>
+    <p>Before dawn on our final morning, guests can float above Luxor's West Bank as first light spills across the Nile valley. Silent skies, colossal temples far below, the desert turning to gold — an optional way to greet the closing day of the pilgrimage.</p>
+  </div>
+</section>
+
+<!-- INCLUSIONS -->
+<section class="panel inclusions" style="background:var(--cream);">
+  <div class="inclusions-inner">
+    <div class="inclusions-head">
+      <div class="eyebrow light-bg">Included</div>
+      <h2 class="h2">Everything is taken care of</h2>
+      <p>Transfers, sightseeing, meals and private entrances — every detail held, so the only thing you need to carry is intention.</p>
+    </div>
+    <div class="incl-grid">
+
+      <div class="incl-card">
+        <div class="top-img" style="background-image:url('assets/images/Accommodation.jpg');"></div>
+        <div class="body">
+          <div class="cat">Accommodation</div>
+          <h4>Nine nights, three properties</h4>
+          <ul>
+            <li>2 nights at Fairmont Cairo</li>
+            <li>5 nights aboard a private luxury Dahabiya</li>
+            <li>2 nights at Steigenberger Luxor (Nile View)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="incl-card">
+        <div class="top-img" style="background-image:url('assets/images/Travel.png');"></div>
+        <div class="body">
+          <div class="cat">Travel</div>
+          <h4>From door to door</h4>
+          <ul>
+            <li>Domestic flight Cairo → Aswan</li>
+            <li>All ground transfers throughout</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="incl-card">
+        <div class="top-img" style="background-image:url('assets/images/Experiences.png');"></div>
+        <div class="body">
+          <div class="cat">Experiences</div>
+          <h4>Sacred sites &amp; private access</h4>
+          <ul>
+            <li>Private access to the King's Chamber</li>
+            <li>Great Pyramid experience · Egyptian Museum</li>
+            <li>Philae · Kom Ombo · Edfu Temples</li>
+            <li>Valley of the Kings · Temple of Hatshepsut · Colossi of Memnon</li>
+            <li>Karnak Temple · Luxor Temple</li>
+            <li>Egyptologist guide throughout</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="incl-card">
+        <div class="top-img" style="background-image:url('assets/images/Practices.png');"></div>
+        <div class="body">
+          <div class="cat">Practices</div>
+          <h4>Inner work, gently held</h4>
+          <ul>
+            <li>Flow Dance Meditation</li>
+            <li>Transformational Breathwork</li>
+            <li>Sufi Whirling</li>
+            <li>Pyramid Initiation Experience</li>
+            <li>Nile Ceremony · Closing Ceremony</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="incl-card">
+        <div class="top-img" style="background-image:url('assets/images/Dining.png');"></div>
+        <div class="body">
+          <div class="cat">Dining</div>
+          <h4>Tables held with care</h4>
+          <ul>
+            <li>Lunch at Khufu Restaurant</li>
+            <li>Closing dinner in Luxor</li>
+            <li>All meals aboard the Dahabiya</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="incl-card">
+        <div class="top-img" style="background-image:url('assets/images/hot air ballon for eternal nile.jpg');"></div>
+        <div class="body">
+          <div class="cat">Optional Experience</div>
+          <h4>Sunrise over Luxor</h4>
+          <ul>
+            <li>Sunrise Hot Air Balloon over Luxor (optional add-on)</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- INVESTMENT / PRICING -->
+<section class="panel pricing" style="background:var(--cream); padding:120px 72px;">
+  <div style="max-width:1120px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:56px;">
+      <div class="eyebrow light-bg" style="color:var(--green); margin-bottom:18px;">Investment</div>
+      <h2 class="h2" style="color:var(--teal); margin-bottom:20px;">Reserve your place</h2>
+      <p class="body-lg" style="color:var(--teal); max-width:640px; margin:0 auto;">A deposit secures your place, with payment plans available. With only a limited number of cabins aboard our private Dahabiya, places are intentionally limited to create an intimate and transformational group experience.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:32px; margin-bottom:32px;">
+      <!-- Early Bird -->
+      <div style="background:#fff; border-radius:16px; padding:40px 36px; border:1px solid rgba(31,49,54,0.08);">
+        <div style="display:inline-block; background:var(--blush); color:var(--teal); font-size:12px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:5px 12px; border-radius:4px; margin-bottom:20px;">Early Bird · Until 31 July 2026</div>
+        <h3 class="h3" style="color:var(--teal); margin-bottom:24px;">Early Bird Pricing</h3>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:14px; border-bottom:1px solid rgba(31,49,54,0.08);">
+            <div style="color:var(--teal);">Shared Twin Cabin</div>
+            <div style="font-family:'Gloock',serif; font-size:26px; color:var(--green);">£4,995 <span style="font-family:'Work Sans',sans-serif; font-size:13px; color:var(--mauve);">/ person</span></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline;">
+            <div style="color:var(--teal);">Private Cabin (Single Occupancy)</div>
+            <div style="font-family:'Gloock',serif; font-size:26px; color:var(--green);">£8,295 <span style="font-family:'Work Sans',sans-serif; font-size:13px; color:var(--mauve);">/ person</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Standard -->
+      <div style="background:linear-gradient(180deg,#1F3136,#2a4449); border-radius:16px; padding:40px 36px; color:#fff;">
+        <div style="display:inline-block; background:rgba(226,204,195,0.2); color:var(--blush); font-size:12px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:5px 12px; border-radius:4px; margin-bottom:20px;">Standard · From 1 August 2026</div>
+        <h3 class="h3" style="color:#fff; margin-bottom:24px;">Standard Pricing</h3>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; padding-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.14);">
+            <div>Shared Twin Cabin</div>
+            <div style="font-family:'Gloock',serif; font-size:26px; color:var(--blush);">£5,495 <span style="font-family:'Work Sans',sans-serif; font-size:13px; color:rgba(255,255,255,0.7);">/ person</span></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline;">
+            <div>Private Cabin (Single Occupancy)</div>
+            <div style="font-family:'Gloock',serif; font-size:26px; color:var(--blush);">£8,795 <span style="font-family:'Work Sans',sans-serif; font-size:13px; color:rgba(255,255,255,0.7);">/ person</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="body-sm" style="text-align:center; color:var(--mauve); font-style:italic;">Places are limited to the number of cabins available aboard our private Dahabiya. A deposit secures your place, with payment plans available on request.</p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="enquire">
+  <div class="final-cta-inner">
+    <div class="eyebrow">Secure your place</div>
+    <h2 class="h2">Join us for a transformational journey</h2>
+    <p>Reserve your place by emailing <a class="email js-email" href="#" data-u="modernashramteam" data-d="gmail.com">modernashramteam<!--@-->&#64;gmail<!--.-->&#46;com</a> or completing the enquiry form on our contact page. Cabins are intentionally limited, and a brief introductory call will be held online before your place is confirmed. We look forward to welcoming you in November.</p>
+    <a href="contact" class="btn btn-reverse">Enquire Now</a>
+    <p class="note">A deposit secures your place, with payment plans available.</p>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────── -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="footer-logo" aria-hidden="true"></div>
+
+  <a href="https://www.instagram.com/themodernashram/" class="footer-instagram" aria-label="Instagram" target="_blank" rel="noopener">
+    <img src="assets/images/Instagram Icon 28 x 28px DARK GREEN.svg" alt="" width="28" height="28">
+  </a>
+
+  <nav class="footer-nav" aria-label="Footer">
+    <a href="/">Home</a>
+    <a href="journeys">Journeys</a>
+    <a href="about">About</a>
+    <a href="contact">Contact</a>
+  </nav>
+
+  <div class="footer-divider" aria-hidden="true"></div>
+
+  <div class="footer-legal">
+    <p class="footer-legal-left">© 2026 The Modern Ashram</p>
+    <div class="footer-legal-right">
+      <a href="privacy-policy">Privacy Policy</a>
+      <a href="terms-of-use">Terms of Use</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* canonical nav hamburger toggle — keep in sync across all pages */
+  (function () {
+    const burger = document.querySelector('.nav-burger');
+    const navLinks = document.querySelector('.nav-links');
+    const nav = document.querySelector('.nav');
+    if (!burger || !navLinks || !nav) return;
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const expanded = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!expanded));
+    });
+    navLinks.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') burger.setAttribute('aria-expanded', 'false');
+    });
+    document.addEventListener('click', function (e) {
+      if (!nav.contains(e.target)) burger.setAttribute('aria-expanded', 'false');
+    });
+  })();
+
+  /* mailto assembly for obfuscated email links — see CLAUDE.md */
+  (function () {
+    document.querySelectorAll('a.js-email').forEach(function (a) {
+      const u = a.dataset.u, d = a.dataset.d;
+      if (!u || !d) return;
+      a.href = 'mai' + 'lto:' + u + '@' + d;
+    });
+  })();
+</script>
+</body>
+</html>
