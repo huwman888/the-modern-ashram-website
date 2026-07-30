@@ -377,15 +377,12 @@
   .stop-content p { color:rgba(255,255,255,0.82); font-size:15px; line-height:1.7; margin-bottom:20px; }
   .stop-content .visiting-label { font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--blush); margin-bottom:12px; opacity:0.85; }
   .stop-content .visiting { list-style:none; display:flex; flex-direction:column; gap:8px; }
-  .stop-content .visiting li { font-size:14px; color:rgba(255,255,255,0.9); padding-left:22px; position:relative; line-height:1.5; }
-  .stop-content .visiting li::before { content:""; position:absolute; left:0; top:9px; width:12px; height:1px; background:var(--mauve); }
+  .stop-content .visiting li { font-size:14px; color:rgba(255,255,255,0.9); line-height:1.5; }
   /* Alternate layout */
   .stop.left .stop-content  { grid-column:1; text-align:right; padding-right:64px; padding-left:0; }
   .stop.left .stop-content .loc-eyebrow { justify-content:flex-end; }
   .stop.left .stop-content .loc-eyebrow::before { display:none; }
   .stop.left .stop-content .loc-eyebrow::after { content:""; width:24px; height:1px; background:var(--blush); }
-  .stop.left .stop-content .visiting li { padding-left:0; padding-right:22px; }
-  .stop.left .stop-content .visiting li::before { left:auto; right:0; }
   .stop.left .stop-img     { grid-column:3; }
   .stop.right .stop-img    { grid-column:1; }
   .stop.right .stop-content { grid-column:3; padding-left:64px; padding-right:0; }
@@ -427,7 +424,10 @@
   .inclusions-head .eyebrow.light-bg { display:inline-block; margin-bottom:18px; }
   .inclusions-head p { color:var(--teal); margin-top:18px; font-size:17px; line-height:1.65; }
   /* Category grid — each card has a small image and inclusion list */
-  .incl-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:9px; }
+  .incl-grid { display:grid; grid-template-columns:repeat(12,1fr); gap:9px; margin-bottom:9px; }
+  .incl-card { grid-column:span 4; }
+  .incl-card:nth-last-child(2):nth-child(3n+1) { grid-column:3 / span 4; }
+  .incl-card:nth-last-child(1):nth-child(3n+2) { grid-column:7 / span 4; }
   .incl-card { background:#fff; border-radius:16px; overflow:hidden; border:1px solid rgba(31,49,54,0.08); display:flex; flex-direction:column; }
   .incl-card .top-img { height:180px; background-size:cover; background-position:center; position:relative; }
   .incl-card .top-img::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(31,49,54,0) 50%,rgba(31,49,54,0.3) 100%); }
@@ -551,6 +551,7 @@
     .hero-inner, .invitation, .foundations, .accom, .itinerary, .balloon, .inclusions, .pricing, .final-cta, .facilitators { padding:72px 24px !important; }
     .pricing > div > div[style*="grid-template-columns:repeat(2"] { grid-template-columns:1fr !important; gap:20px !important; }
     .cards-grid, .foundations-grid, .pricing-grid, .incl-grid, .invitation-top, .accom-head, .facilitators-grid { grid-template-columns:1fr !important; gap:9px; }
+    .incl-card, .incl-card:nth-last-child(2):nth-child(3n+1), .incl-card:nth-last-child(1):nth-child(3n+2) { grid-column:1 !important; }
     .facilitators-grid { gap:56px !important; margin-bottom:48px; }
     .facilitator-photo { width:240px; height:240px; }
     .gallery-boat, .gallery-hotel { grid-template-columns:1fr !important; grid-template-rows:auto !important; }
@@ -777,11 +778,10 @@
         <div class="stop-img" style="background-image:url('assets/images/Temple Wall Mural.jpeg');"></div>
       </div>
 
-      <div class="stop right">
-        <div class="stop-img" style="background-image:url('assets/images/Hot Air Balloons.jpeg');"></div>
-        <div class="stop-marker"><div class="dot"></div><div class="day">23 Nov</div></div>
-        <div class="stop-content">
-          <div class="loc-eyebrow">Departure Day</div>
+      <div class="stop" style="grid-template-columns:1fr; gap:32px; text-align:center;">
+        <div class="stop-img" style="grid-column:1; aspect-ratio:21/9; background-image:url('assets/images/Hot Air Balloons.jpeg');"></div>
+        <div class="stop-content" style="grid-column:1; padding:0; text-align:center;">
+          <div class="loc-eyebrow" style="justify-content:center;">23 Nov · Departure Day<span style="width:24px; height:1px; background:var(--blush); display:inline-block;"></span></div>
           <h3>The pilgrimage may be complete. The journey continues.</h3>
           <p>Breakfast · Departures.</p>
         </div>
